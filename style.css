@@ -121,3 +121,70 @@ h1 {
     font-size: 18px;
   }
 }
+.page {
+  min-height: 100vh;
+  padding: 140px 48px 80px;
+  display: block;
+}
+
+.page-intro {
+  max-width: 900px;
+  margin-bottom: 64px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+}
+
+.project-card {
+  border: 1px solid #271d22;
+  border-radius: 24px;
+  padding: 28px;
+  color: #271d22;
+  text-decoration: none;
+  min-height: 260px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  background: rgba(39, 29, 34, 0.05);
+}
+
+.project-type {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  margin-bottom: 32px;
+}
+
+.project-card h2 {
+  font-size: 32px;
+  font-weight: normal;
+  margin: 0 0 16px;
+}
+
+.project-card p {
+  line-height: 1.5;
+}
+
+.sketch-page {
+  padding: 140px 48px 80px;
+  display: block;
+}
+
+.sketch-info {
+  max-width: 900px;
+  margin-bottom: 48px;
+}
+
+#raster-container {
+  border: 1px solid #271d22;
+  border-radius: 24px;
+  overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
+}
