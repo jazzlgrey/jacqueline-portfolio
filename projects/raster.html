@@ -7,7 +7,6 @@
   <title>Raster Image Study | Jacqueline Song</title>
 
   <link rel="stylesheet" href="../style.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/p5@1/lib/p5.min.js"></script>
 </head>
 
@@ -28,13 +27,22 @@
       <p class="eyebrow">p5.js Sketch</p>
       <h1>Raster Image Study</h1>
       <p class="intro">
-        This sketch transforms an image into a raster field. Each circle samples
-        a pixel from the image; darker areas become larger marks, while lighter areas
-        become smaller marks.
+        This sketch transforms an image into a raster field.
       </p>
     </section>
 
-    <section id="raster-container"></section>
+    <section class="raster-work">
+  <div id="raster-container"></div>
+
+  <div class="raster-controls">
+    <p>Tile density</p>
+    <p class="small-note">10 / 20 / 30 / 50 / 100</p>
+
+    <div id="controls-container"></div>
+
+    <p>Move your mouse over the image to ripple the raster field.</p>
+  </div>
+</section>
   </main>
 
   <script src="../sketches/raster-sketch.js"></script>
