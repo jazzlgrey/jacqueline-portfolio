@@ -1,0 +1,54 @@
+/* Raster project page only */
+
+.raster-work {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+#raster-container {
+  border: 1px solid #271d22;
+  border-radius: 24px;
+  overflow: hidden;
+  width: 600px;
+  height: 900px;
+  max-width: 100%;
+  background: #f8f1ec;
+}
+
+#raster-container canvas {
+  display: block;
+  position: static !important;
+  width: 600px !important;
+  height: 900px !important;
+  z-index: auto !important;
+  pointer-events: auto !important;
+}
+
+.raster-controls {
+  max-width: 260px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #271d22;
+}
+
+.raster-controls p {
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.small-note {
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+#controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 18px 0 24px;
+}
+
+#controls-container input {
+  width: 240px;
+}

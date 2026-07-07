@@ -2,21 +2,21 @@ let img;
 
 let tilesSlider;
 
-let tilesOptions = [80, 100, 140, 180, 200];
+let tilesOptions = [60, 80, 100, 120, 150];
 
 function preload() {
   img = loadImage(
-    "../assets/images/ua862.jpeg",
+    "../assets/images/dragon_porcelain.jpg",
     () => console.log("Image loaded successfully"),
     () => console.error("Image failed to load. Check path/name: ../assets/images/dragon_porcelain.jpg")
   );
 }
 
 function setup() {
-  let canvas = createCanvas(600, 900);
+  let canvas = createCanvas(450, 450);
 
   // Use this if your HTML has <div id="raster-container"></div>
-  canvas.parent("raster-container");
+  canvas.parent("sketch-container");
 
   img.resize(width, height);
   noStroke();
@@ -52,10 +52,11 @@ function draw() {
     }
   }
 
+  drawLabels(tilesX);
 }
 
 function keyPressed() {
   if (key === "s" || key === "S") {
-    saveCanvas("ua862_raster", "png");
+    saveCanvas("dragon_porcelain_raster", "png");
   }
 }

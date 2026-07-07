@@ -7,14 +7,11 @@
   <title>Jacqueline Song | Art & Creative Coding</title>
 
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/p5@1/lib/p5.min.js"></script>
 </head>
 
 <body>
-  <div id="sketch-container"></div>
-
   <header>
-    <a class="logo" href="index.html">Jacqueline Song</a>
+    <a class="logo" href="index.html">J.S.</a>
 
     <nav>
       <a href="about.html">About</a>
@@ -25,27 +22,73 @@
   </header>
 
   <main>
-    <section class="hero">
-      <p class="eyebrow">History of Art × Data Science × Digital Humanities</p>
+    <section class="home-hero">
+      <!-- Replace with <img src="assets/images/your-photo.jpg" alt="Jacqueline Song portrait"> -->
+      <img src="assets/images/Home_Collage_L.png" alt="Jacqueline Song portrait" class="home-hero-image--left">
 
-      <h1 class="hero-title">
-  art, design,<br>
-  poetry, and<br>
-  creative coding.
-</h1>
+      <div class="home-hero-text">
+        <p class="home-name">Jacqueline Song</p>
+        <p class="home-role">Artist &amp;<br />Creative<br />Technologist</p>
+      </div>
 
-      <p class="intro">
-        building things... 
-      </p>
+      <!-- Replace with <img src="assets/images/your-artwork.jpg" alt="Featured artwork"> -->
+       <img src="assets/images/Home_Collage_R.png" alt="porcelain dargon art" class="home-hero-image--right">
 
-    <div class="hero-links">
-  <a class="button" href="projects.html">View Projects</a>
-  <a class="button" href="archive.html">Digital Archive</a>
-</div>
+      <div class= class="home-hero-text">
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <div class="discover-more">
+      Projects<br />
+      Discover more
+      <span class="discover-arrow">&#9660;</span>
+    </div>
+
+    <section class="tile-grid">
+      <a class="project-tile" href="projects/raster.html">
+        <!-- Replace with <img src="assets/images/raster-thumb.jpg" alt="Raster Image Study"> -->
+        <div class="image-placeholder placeholder-square">Add image</div>
+        <p class="tile-caption">Raster Image Study</p>
+      </a>
+
+      <a class="project-tile" href="projects/dragon-porcelain.html">
+        <!-- Replace with <img src="assets/images/dragon-thumb.jpg" alt="Porcelain Dragon Fragmented"> -->
+        <div class="image-placeholder placeholder-square">Add image</div>
+        <p class="tile-caption">Porcelain Dragon Fragmented</p>
+      </a>
+
+      <a class="project-tile" href="archive.html">
+        <!-- Replace with <img src="assets/images/archive-thumb.jpg" alt="Porcelain Grammar"> -->
+        <img src="assets/images/Home_Collage_L.png" alt="Porcelain Grammar" class="placeholder-square">
+        <p class="tile-caption">Porcelain Grammar</p>
+      </a>
     </section>
   </main>
 
-  <script src="sketch.js"></script>
-<script src="raster-sketch.js"></script>
+  <footer class="site-footer footer-olive">
+    <div class="footer-info">
+      <span>Jacqueline Song</span>
+      <span>Creative Technologist</span>
+      <span>Berkeley, CA | Hong Kong</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="mailto:itsjacquelinehere@gmail.com">Email</a>
+      <!-- Add your Instagram URL -->
+      <a href="#">Insta</a>
+      <!-- Add your LinkedIn URL -->
+      <a href="#">LinkedIn</a>
+    </div>
+
+    <p class="made-by">Made by Jacqueline Song</p>
+
+    <div class="footer-wordmark">
+      <span>J</span>
+      <span class="dot"></span>
+      <span>S</span>
+    </div>
+  </footer>
 </body>
 </html>

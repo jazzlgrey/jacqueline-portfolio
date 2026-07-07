@@ -1,20 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 :root {
   /* Fonts */
-  --font-heading: "The Seasons", Georgia, serif;
-  --font-body: "Space Mono", monospace;
-  --font-ui: "Space Mono", monospace;
+  --font-heading: "Instrument Serif", Georgia, serif;
+  --font-body: "Atkinson Hyperlegible Mono", monospace;
+  --font-ui: "Atkinson Hyperlegible Mono", monospace;
+  --font-logo: "Atkinson Hyperlegible Mono", monospace;
 
   /* Palette */
+  --black: #000000;
   --lime-yellow: #E0FF17;
   --dark-amethyst: #3B003E;
   --white: #FFFFFF;
   --dark-midnight: #090034;
   --pale-slate: #DAD3DA;
+  --cream: #F1EDE1;
+  --olive: #67675C;
+  --lavender: #D9D4EC;
 
   /* Functional */
-  --background: #FFFFFF;
+  --background: var(--cream);
   --text-main: #090034;
   --text-muted: #3B003E;
   --heading-color: #3B003E;
@@ -62,85 +69,25 @@ a {
 }
 
 /* =========================
-   Background Particle Field
+   Dark theme (About page)
    ========================= */
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 15vh;
-  right: -24vw;
-  width: 76vw;
-  height: 76vw;
-  pointer-events: none;
-  z-index: 0;
-  border-radius: 50%;
-
-  background-image:
-    radial-gradient(circle, rgba(9, 0, 52, 0.5) 1px, transparent 1.7px);
-
-  background-size: 13px 13px;
-
-  -webkit-mask-image:
-    radial-gradient(
-      circle at center,
-      black 0%,
-      black 16%,
-      rgba(0, 0, 0, 0.78) 31%,
-      rgba(0, 0, 0, 0.38) 52%,
-      transparent 74%
-    );
-
-  mask-image:
-    radial-gradient(
-      circle at center,
-      black 0%,
-      black 16%,
-      rgba(0, 0, 0, 0.78) 31%,
-      rgba(0, 0, 0, 0.38) 52%,
-      transparent 74%
-    );
-
-  transform: rotate(-8deg);
-  opacity: 0.5;
+body.theme-dark {
+  background: var(--dark-midnight);
+  color: var(--lavender);
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  top: 28vh;
-  right: 1vw;
-  width: 34vw;
-  height: 34vw;
-  pointer-events: none;
-  z-index: 0;
-  border-radius: 50%;
+body.theme-dark p,
+body.theme-dark .intro,
+body.theme-dark .hero p {
+  color: var(--lavender);
+}
 
-  background-image:
-    radial-gradient(circle, rgba(59, 0, 62, 0.75) 1px, transparent 1.4px);
-
-  background-size: 6px 6px;
-
-  -webkit-mask-image:
-    radial-gradient(
-      circle at center,
-      black 0%,
-      black 24%,
-      rgba(0, 0, 0, 0.7) 46%,
-      transparent 72%
-    );
-
-  mask-image:
-    radial-gradient(
-      circle at center,
-      black 0%,
-      black 24%,
-      rgba(0, 0, 0, 0.7) 46%,
-      transparent 72%
-    );
-
-  transform: rotate(12deg);
-  opacity: 0.55;
+body.theme-dark h1,
+body.theme-dark h2,
+body.theme-dark h3,
+body.theme-dark h4 {
+  color: var(--white);
 }
 
 header,
@@ -151,8 +98,9 @@ footer {
 }
 
 /* Prevent background p5 canvas from blocking links/buttons */
+/* Prevent only the homepage background p5 canvas from blocking links/buttons */
 #sketch-container,
-canvas {
+#sketch-container canvas {
   pointer-events: none;
 }
 
@@ -167,7 +115,10 @@ header,
   background: transparent;
   color: var(--dark-midnight);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0.65rem;
 }
 
@@ -177,25 +128,26 @@ header,
   color: var(--dark-midnight);
   font-family: var(--font-ui);
   font-size: 1rem;
-  font-weight: 400;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
 }
 
 nav,
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 nav a,
 .nav a {
   color: var(--dark-midnight);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  text-decoration: none;
 }
 
 .logo:hover,
@@ -203,6 +155,27 @@ nav a,
 nav a:hover,
 .nav a:hover {
   color: var(--dark-amethyst);
+  background: var(--lime-yellow);
+}
+
+/* Dark theme (About page): flip header to lime-yellow-on-navy */
+body.theme-dark header,
+body.theme-dark .site-header {
+  color: var(--lime-yellow);
+}
+
+body.theme-dark .logo,
+body.theme-dark .site-title,
+body.theme-dark nav a,
+body.theme-dark .nav a {
+  color: var(--lime-yellow);
+}
+
+body.theme-dark .logo:hover,
+body.theme-dark .site-title:hover,
+body.theme-dark nav a:hover,
+body.theme-dark .nav a:hover {
+  color: var(--dark-midnight);
   background: var(--lime-yellow);
 }
 
@@ -520,26 +493,303 @@ figcaption {
 
 .site-footer,
 footer {
-  padding: var(--space-lg);
-  background: var(--dark-midnight);
+  padding: var(--space-xl) var(--space-lg) var(--space-md);
+  background: var(--olive);
   color: var(--white);
-  border-top: 8px solid var(--lime-yellow);
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-md);
   font-family: var(--font-ui);
   font-size: 0.85rem;
 }
 
+.site-footer.footer-cream {
+  background: var(--cream);
+  color: var(--dark-midnight);
+}
+
+.footer-info,
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.footer-links {
+  margin-bottom: var(--space-xxl);
+}
+
+.footer-info > *,
+.footer-links > * {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.footer-info > :nth-child(2) {
+  text-align: center;
+}
+
+.footer-info > :nth-child(3),
+.footer-links > :nth-child(3) {
+  text-align: right;
+}
+
+.footer-links > :nth-child(2) {
+  text-align: center;
+}
+
 .site-footer a,
 footer a {
-  color: var(--white);
+  color: var(--lime-yellow);
   text-decoration: none;
 }
 
 .site-footer a:hover,
 footer a:hover {
-  color: var(--lime-yellow);
+  color: var(--dark-midnight);
+  background: var(--lime-yellow);
+}
+
+.footer-cream a,
+footer .footer-cream a {
+  color: var(--dark-amethyst);
+}
+
+.footer-cream a:hover {
+  color: var(--dark-midnight);
+  background: var(--lime-yellow);
+}
+
+.made-by {
+  text-align: center;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-md);
+  opacity: 0.85;
+}
+
+.footer-wordmark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--font-logo);
+  line-height: 0.75;
+  font-size: clamp(5rem, 17vw, 13rem);
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.footer-cream .footer-wordmark {
+  color: var(--dark-midnight);
+}
+
+.footer-wordmark .dot {
+  width: 0.16em;
+  height: 0.16em;
+  border-radius: 50%;
+  background: currentColor;
+  align-self: center;
+}
+
+/* =========================
+   Image placeholder utility
+   ========================= */
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px dashed var(--border);
+  background: rgba(9, 0, 52, 0.04);
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: var(--space-md);
+}
+
+body.theme-dark .image-placeholder {
+  border-color: rgba(217, 212, 236, 0.4);
+  background: rgba(217, 212, 236, 0.06);
+  color: var(--lavender);
+}
+
+.placeholder-square {
+  aspect-ratio: 1 / 1;
+}
+
+.placeholder-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.placeholder-wide {
+  aspect-ratio: 4 / 3;
+}
+
+/* Once a placeholder <div> is swapped for a real <img> (keeping the same
+   layout class), this makes the image fill its box without distorting.
+   Sizing/position for the hero images is set further below — this only
+   adds object-fit so those don't stretch. */
+img.home-hero-image--left,
+img.home-hero-image--right {
+  object-fit: cover;
+  display: block;
+}
+
+/* Tile-grid placeholders (e.g. project thumbnails) aren't absolutely
+   positioned, so the <img> needs its own width + aspect-ratio sizing. */
+img.placeholder-square,
+img.placeholder-portrait,
+img.placeholder-wide {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   Home hero
+   ========================= */
+
+.home-hero {
+  position: relative;
+  height: 82vh;
+  min-height: 600px;
+  margin: 0 var(--space-lg);
+}
+
+/* Left image: smaller, portrait, sits low in the hero */
+.home-hero-image--left {
+  position: absolute;
+  left: 0;
+  top: 43%;
+  width: 22%;
+  height: 50%;
+}
+
+/* Right image: larger, near-square, sits high in the hero */
+.home-hero-image--right {
+  position: absolute;
+  right: 0;
+  top: 7%;
+  width: 41%;
+  height: 68%;
+}
+
+/* Name + role: right-aligned, tucked just left of the right image */
+.home-hero-text {
+  position: absolute;
+  right: 43.5%;
+  top: 46%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.home-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.home-role {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dark-amethyst);
+}
+
+.home-role br {
+  content: "";
+}
+
+.discover-more {
+  text-align: center;
+  padding: var(--space-md) 0 var(--space-lg);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.discover-more .discover-arrow {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 var(--space-lg);
+}
+
+body.theme-dark hr.divider {
+  border-top-color: rgba(217, 212, 236, 0.25);
+}
+
+/* =========================
+   About hero
+   ========================= */
+
+.about-hero-title {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin-bottom: var(--space-xl);
+}
+
+.about-columns {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.about-bio {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  max-width: 46ch;
+}
+
+.availability-line {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  padding: var(--space-xxl) var(--space-lg);
+}
+
+/* =========================
+   Simple project tile grid (home page)
+   ========================= */
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  padding: 0 var(--space-lg) var(--space-xl);
+}
+
+.project-tile {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-tile figcaption,
+.project-tile .tile-caption {
+  margin-top: var(--space-sm);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* =========================
@@ -574,9 +824,50 @@ footer a:hover {
     grid-column: span 1;
   }
 
-  .site-footer,
-  footer {
+  .about-columns,
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Collapse the asymmetric hero into a simple stacked column on small screens */
+  .home-hero {
+    position: static;
+    height: auto;
+    min-height: 0;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-xl) 0;
+  }
+
+  .home-hero-image--left,
+  .home-hero-image--right {
+    position: static;
+    width: 70%;
+    height: auto;
+  }
+
+  .home-hero-text {
+    position: static;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .footer-info,
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    text-align: left !important;
+  }
+
+  .footer-info > *,
+  .footer-links > * {
+    text-align: left !important;
+  }
+
+  .footer-wordmark {
+    font-size: clamp(3.5rem, 22vw, 6rem);
   }
 }
 
@@ -601,46 +892,4 @@ footer a:hover {
     width: 52vw;
     height: 52vw;
   }
-}
-
-.raster-work {
-  display: flex;
-  gap: 32px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-#raster-container {
-  border: 1px solid #271d22;
-  border-radius: 24px;
-  overflow: hidden;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.raster-controls {
-  max-width: 260px;
-  font-family: Georgia, "Times New Roman", serif;
-  color: #271d22;
-}
-
-.raster-controls p {
-  margin: 0 0 12px;
-  line-height: 1.4;
-}
-
-.small-note {
-  font-size: 13px;
-  opacity: 0.65;
-}
-
-#controls-container {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin: 18px 0 24px;
-}
-
-#controls-container input {
-  width: 240px;
 }
