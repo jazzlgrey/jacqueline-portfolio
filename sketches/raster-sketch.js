@@ -1,7 +1,7 @@
 let img;
 
 function preload() {
-  img = loadImage("../assets/images/nara.jpg");
+  img = loadImage("../assets/images/ua862.jpg");
 }
 
 function setup() {
