@@ -275,7 +275,7 @@ p {
   font-size: clamp(5rem, 11vw, 12rem);
   line-height: 1.05;
   letter-spacing: -0.045em;
-  font-style: italic;
+  font-style: bold;
   color: var(--dark-midnight);
 
   padding: 0.08em 0.12em 0.12em 0;
@@ -736,7 +736,7 @@ body.theme-dark hr.divider {
    ========================= */
 
 .about-hero-title {
-  text-align: center;
+  text-align: right;
   font-family: var(--font-heading);
   font-style: italic;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
