@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 :root {
   /* Fonts */
-  --font-heading: "Instrument Serif", Georgia, serif;
+  --font-heading: "Instrument Serif", serif;
   --font-body: "Atkinson Hyperlegible Mono", monospace;
   --font-ui: "Atkinson Hyperlegible Mono", monospace;
   --font-logo: "Atkinson Hyperlegible Mono", monospace;
@@ -88,6 +89,42 @@ body.theme-dark h2,
 body.theme-dark h3,
 body.theme-dark h4 {
   color: var(--white);
+}
+
+/* =========================
+   Dark theme (Archive page)
+   ========================= */
+
+body.theme-black {
+  background: var(--dark-midnight);
+  color: var(--white);
+}
+
+body.theme-black p,
+body.theme-black .intro,
+body.theme-black .archive-caption {
+  color: var(--olive);
+}
+
+body.theme-black h1,
+body.theme-black h2,
+body.theme-black h3,
+body.theme-black h4,
+body.theme-black .archive-title {
+  color: var(--cream);
+}
+
+/* "Labels" — nav, logo, and the archive row index numbers */
+body.theme-black .logo,
+body.theme-black nav a,
+body.theme-black .archive-index {
+  color: var(--lime-yellow);
+}
+
+body.theme-black .logo:hover,
+body.theme-black nav a:hover {
+  color: var(--dark-midnight);
+  background: var(--lime-yellow);
 }
 
 header,
@@ -615,6 +652,12 @@ body.theme-dark .image-placeholder {
   color: var(--lavender);
 }
 
+body.theme-black .image-placeholder {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+}
+
 .placeholder-square {
   aspect-ratio: 1 / 1;
 }
@@ -689,7 +732,6 @@ img.placeholder-wide {
 .home-name {
   font-family: var(--font-heading);
   font-size: clamp(1.4rem, 2.4vw, 2rem);
-  font-style: italic;
   letter-spacing: 0.02em;
   margin-bottom: 0.4rem;
 }
@@ -738,7 +780,6 @@ body.theme-dark hr.divider {
 .about-hero-title {
   text-align: right;
   font-family: var(--font-heading);
-  font-style: italic;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   margin-bottom: var(--space-xl);
 }
@@ -793,10 +834,176 @@ body.theme-dark hr.divider {
 }
 
 /* =========================
+   Archive page
+   ========================= */
+
+.archive-title {
+  text-align: center;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+  margin: var(--space-xl) 0 var(--space-xxl);
+}
+
+.archive-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding: 0 var(--space-md) var(--space-xxl);
+}
+
+.archive-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-lg);
+}
+
+.archive-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.archive-caption {
+  line-height: 1.5;
+}
+
+.archive-image {
+  flex: 1;
+  align-self: flex-start;
+}
+
+/* Smaller, fixed-width image column, held at a 3:4 ratio, placed
+   at the far left of the row */
+.archive-image--small {
+  flex: 0 0 220px;
+  align-self: flex-start;
+  order: -1;
+}
+
+.archive-image--small .image-placeholder,
+.archive-image--small img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+}
+
+.archive-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+}
+
+/* Shrinks a single archive-image column to a fixed width instead of
+   letting it grow to fill its flex share. Width changes; the 2:3
+   ratio (and therefore height) still comes from .archive-photo. */
+.archive-image--compact {
+  flex: 0 0 300px;
+}
+
+img.archive-photo {
+  object-fit: cover;
+  display: block;
+}
+
+.archive-photo-wide {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+}
+
+img.archive-photo-wide {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Horizontal-scrolling carousel used in one archive-image slot.
+   aspect-ratio gives the box an actual height to work with — without
+   it, "height: 100%" on the track below has nothing to resolve
+   against, since the box's own height would otherwise be auto. */
+.archive-carousel {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.archive-carousel-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+
+.archive-carousel-track::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and other WebKit browsers */
+}
+
+.archive-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  object-fit: cover;
+  display: block;
+}
+
+.archive-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--dark-midnight);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  line-height: 0.75;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 5%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.archive-carousel-btn--prev {
+  left: 0.4rem;
+}
+
+.archive-carousel-btn--next {
+  right: 0.4rem;
+}
+
+/* =========================
    Responsive
    ========================= */
 
 @media (max-width: 900px) {
+  .archive-row {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .archive-image {
+    order: 1;
+    align-self: stretch;
+  }
+
+  .archive-image--small,
+  .archive-image--compact {
+    flex-basis: auto;
+  }
+
+  .archive-text {
+    order: 2;
+  }
+
   header,
   .site-header {
     padding: var(--space-md);

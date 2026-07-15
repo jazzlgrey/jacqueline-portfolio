@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Archive | Jacqueline Song</title>
+  <title>Archive | perlgray</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body class="theme-black">
   <header>
     <a class="logo" href="index.html">perlgray</a>
 
@@ -21,23 +21,76 @@
   </header>
 
   <main class="page">
+
     <section class="page-intro">
-      <p class="eyebrow">Digital archive</p>
-      <h1>Porcelain Grammar.</h1>
+      <h1>Archive</h1>
       <p class="intro">
-        A developing archive project on porcelain, motif, repair, family memory,
-        and digital translation.
+        An ongoing archive of all that I created. Well, almost all. 
       </p>
     </section>
 
-    <hr class="divider" />
+    <section class="archive-list">
+      <div class="archive-row">
+        <div class="archive-image archive-image--compact archive-carousel">
+          <div class="archive-carousel-track">
+            <video
+            class="archive-carousel-slide"
+            src="assets/videos/ua862_process.mov"
+            controls
+            autoplay
+            muted
+            loop
+            playsinline
+            ></video>
+            <video
+            class="archive-carousel-slide"
+            src="assets/videos/ua862_closeup.mov"
+            controls
+            autoplay
+            muted
+            loop
+            playsinline
+            ></video>
+            <img class="archive-carousel-slide" src="assets/images/ua862_process1.jpeg">
+          </div>
+          <button class="archive-carousel-btn archive-carousel-btn--prev" aria-label="Previous image">&#8249;</button>
+          <button class="archive-carousel-btn archive-carousel-btn--next" aria-label="Next image">&#8250;</button>
+        </div>
+        <div class="archive-text">
+          <span class="archive-index">01</span>
+          <p class="archive-caption">UA862<br />oil on canvas, 2026</p>
+        </div>
+        <div class="archive-image">
+            <img src="assets/images/ua862.jpeg" alt="UA862" class="archive-photo">
+        </div>
+      </div>
 
-    <section style="padding: 0 2rem 4rem;">
-      <!-- Replace with <img src="assets/images/archive-piece-1.jpg" alt="Archive entry"> -->
-      <div class="image-placeholder placeholder-wide" style="max-width: 640px;">Add image</div>
-      <p class="intro" style="margin-top: 1.5rem;">
-        [Placeholder &mdash; entries for this archive are still being catalogued. Check back soon.]
-      </p>
+      <div class="archive-row">
+        <div class="archive-image">
+          <!-- Replace with <img src="assets/images/archive-02.jpg" alt="Archive entry 02" class="archive-photo"> -->
+          <div class="image-placeholder archive-photo">Add image</div>
+        </div>
+        <div class="archive-text">
+          <span class="archive-index">02</span>
+          <p class="archive-caption">Title<br />Medium, Date</p>
+        </div>
+      </div>
+
+      <div class="archive-row">
+        <div class="archive-text">
+          <span class="archive-index">03</span>
+          <p class="archive-caption">Celine<br />2022 Spring/Summer</p>
+        </div>
+        <div class="archive-image">
+          <!-- Replace with <img src="assets/images/archive-03.jpg" alt="Celine, 2022 Spring/Summer" class="archive-photo"> -->
+          <div class="image-placeholder archive-photo">Add image</div>
+        </div>
+      </div>
+
+      <div class="archive-row">
+        <!-- Replace with <img src="assets/images/archive-04.jpg" alt="Archive entry 04" class="archive-photo-wide"> -->
+        <div class="image-placeholder archive-photo-wide">Add image</div>
+      </div>
     </section>
   </main>
 
@@ -62,5 +115,21 @@
       <span>perlgray</span>
     </div>
   </footer>
+
+  <script>
+    document.querySelectorAll('.archive-carousel').forEach(function (carousel) {
+      const track = carousel.querySelector('.archive-carousel-track');
+      const prevBtn = carousel.querySelector('.archive-carousel-btn--prev');
+      const nextBtn = carousel.querySelector('.archive-carousel-btn--next');
+
+      prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>
