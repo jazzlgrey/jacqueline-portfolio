@@ -114,9 +114,10 @@ body.theme-black .archive-title {
   color: var(--cream);
 }
 
-/* "Labels" — nav, logo, and the archive row index numbers */
+/* "Labels" — nav, logo, eyebrows, and the archive row index numbers */
 body.theme-black .logo,
 body.theme-black nav a,
+body.theme-black .eyebrow,
 body.theme-black .archive-index {
   color: var(--lime-yellow);
 }
@@ -981,6 +982,86 @@ img.archive-photo-wide {
 }
 
 /* =========================
+   Writing / Article page
+   ========================= */
+
+.article-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.article-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.article-heading {
+  width: 100%;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xl);
+}
+
+.article-title,
+.article-subtitle {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.article-title {
+  font-size: 3.0rem;
+  color: var(--dark-midnight);
+}
+
+.article-subtitle {
+  font-size: 1.8rem;
+  color: var(--olive);
+  margin-top: 0.2rem;
+}
+
+/* The blank space after "TITLE |" / "SUBTITLE |" where the real
+   title/subtitle text goes — dim + non-uppercase so it reads as an
+   empty fill-in slot rather than real content. */
+.article-title .fill,
+.article-subtitle .fill {
+  text-transform: none;
+  letter-spacing: normal;
+  opacity: 0.35;
+  font-style: italic;
+}
+
+/* A real photo dropped into an article column. Unlike the placeholder-*
+   classes (which force a fixed aspect-ratio + object-fit: cover and
+   will crop whatever image you put in them), this just scales the
+   image to the column width and lets height follow naturally — full
+   image visible, native aspect ratio preserved. */
+.article-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Blank text block — same dashed-box treatment as .image-placeholder,
+   used to mark where a paragraph of body copy will go. */
+.text-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  padding: var(--space-md);
+  border: 1px dashed var(--border);
+  background: rgba(9, 0, 52, 0.04);
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+/* =========================
    Responsive
    ========================= */
 
@@ -1032,7 +1113,8 @@ img.archive-photo-wide {
   }
 
   .about-columns,
-  .tile-grid {
+  .tile-grid,
+  .article-columns {
     grid-template-columns: 1fr;
   }
 

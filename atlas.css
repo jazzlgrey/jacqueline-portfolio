@@ -1,0 +1,33 @@
+/* Atlas project page only */
+
+/* Full-bleed: no side padding, so the painting runs edge to edge. */
+.atlas-stage-wrap {
+  padding: var(--space-md) 0 0;
+}
+
+/* Height is locked to the painting's own aspect ratio (2459 x 3715),
+   not a viewport-height box — so at 100% width, the full painting is
+   visible with no cropping and no letterboxing, and the page itself
+   simply becomes as tall as that ratio requires. */
+.atlas-stage {
+  width: 100%;
+  aspect-ratio: 2459 / 3715;
+  background: #141414;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.atlas-stage:active {
+  cursor: grabbing;
+}
+
+.atlas-stage canvas {
+  display: block;
+}
+
+.atlas-hint {
+  margin-top: var(--space-sm);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
