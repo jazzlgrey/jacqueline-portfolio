@@ -982,6 +982,21 @@ img.archive-photo-wide {
 }
 
 /* =========================
+   Flourish embed sizing
+   ========================= */
+
+/* Caps the embed's width so it doesn't stretch full-bleed across a
+   wide screen. Since the Flourish visualisation now has "Cell aspect"
+   height mode locked in the editor, its height always follows its
+   width proportionally — so shrinking this wrapper's width shrinks
+   the whole embed while keeping the heatmap's cells square. Adjust
+   max-width to taste. */
+.flourish-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* =========================
    Writing / Article page
    ========================= */
 
