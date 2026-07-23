@@ -1,33 +1,94 @@
 /* Atlas project page only */
 
-/* Full-bleed: no side padding, so the painting runs edge to edge. */
-.atlas-stage-wrap {
-  padding: var(--space-md) 0 0;
+/* =========================
+   Full-bleed hero
+   ========================= */
+
+/* No footer — but the page does scroll, so the full (taller than one
+   screen) painting can be seen top to bottom. */
+.atlas-hero {
+  position: relative;
 }
 
-/* Height is locked to the painting's own aspect ratio (2459 x 3715),
-   not a viewport-height box — so at 100% width, the full painting is
-   visible with no cropping and no letterboxing, and the page itself
-   simply becomes as tall as that ratio requires. */
+/* The painting, at its own true aspect ratio — full width, height
+   follows proportionally, so nothing is cropped and the page is
+   exactly as tall as the image requires (usually taller than one
+   viewport, which is what makes it scrollable). */
 .atlas-stage {
   width: 100%;
   aspect-ratio: 2459 / 3715;
   background: #141414;
   overflow: hidden;
-  cursor: grab;
-}
-
-.atlas-stage:active {
-  cursor: grabbing;
 }
 
 .atlas-stage canvas {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
-.atlas-hint {
-  margin-top: var(--space-sm);
+/* Header overlaid directly on top of the painting: transparent
+   background, absolutely positioned across the full hero width.
+   Text color already comes from body.theme-black's lime-yellow
+   header rules. */
+.atlas-overlay-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background: transparent;
+}
+
+/* Small translucent card floating over the top-left of the painting,
+   holding the title + blurb instead of a full side panel. */
+.atlas-info-card {
+  position: absolute;
+  top: 6.5rem;
+  left: var(--space-lg);
+  z-index: 3;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: rgba(9, 0, 52, 0.55);
+  border: 1px solid rgba(217, 212, 236, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.atlas-info-card .eyebrow {
+  font-size: 0.7rem;
+}
+
+.atlas-info-card h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  max-width: none;
+  margin: 0;
+}
+
+.atlas-info-card .intro {
+  font-size: 0.85rem;
+  max-width: none;
+}
+
+.atlas-info-card .atlas-hint {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   opacity: 0.65;
+  max-width: none;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 900px) {
+  .atlas-info-card {
+    top: 5.5rem;
+    left: var(--space-md);
+    right: var(--space-md);
+    max-width: none;
+  }
 }
