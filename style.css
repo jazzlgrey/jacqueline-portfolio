@@ -1060,6 +1060,17 @@ img.archive-photo-wide {
   display: block;
 }
 
+/* Caps an image to a smaller, centered size instead of stretching
+   full-width. height: auto keeps its native aspect ratio — only the
+   width is constrained. Adjust max-width to resize. */
+.image-small {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 /* Blank text block — same dashed-box treatment as .image-placeholder,
    used to mark where a paragraph of body copy will go. */
 .text-placeholder {
