@@ -924,6 +924,14 @@ img.archive-photo-wide {
   display: block;
 }
 
+img.archive-photo-4-3 {
+  width: 60%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+
 /* Horizontal-scrolling carousel used in one archive-image slot.
    aspect-ratio gives the box an actual height to work with — without
    it, "height: 100%" on the track below has nothing to resolve
