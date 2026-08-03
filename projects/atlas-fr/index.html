@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Atlas FR | perlgray</title>
+
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="france.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1/lib/p5.min.js"></script>
+</head>
+
+<body class="theme-black">
+
+  <!-- ==========================================================
+       The graph fills the viewport. Everything else — header,
+       info card, legend, lightbox — floats on top of it as an
+       overlay, same pattern as projects/atlas.html.
+       ========================================================== -->
+  <main class="fr-hero">
+
+    <header class="fr-overlay-header">
+      <a class="logo" href="../../index.html">perlgray</a>
+      <nav>
+        <a href="../../about.html">About</a>
+        <a href="../../projects.html">Projects</a>
+        <a href="../../archive.html">Works</a>
+        <a href="../../writing.html">Writing</a>
+      </nav>
+    </header>
+
+    <!-- Title + how-to-read card, top left -->
+    <div class="fr-info-card">
+      <p class="eyebrow">Digital archive — France, 2025</p>
+      <h1>ATLAS | memories from France, 2025</h1>
+      <p class="intro">
+        Every item in the archive is a node. The nodes gather, each one drifting toward the other
+        items that share its tag. Colour is the tag, shape is the medium.
+      </p>
+      <p class="fr-hint">
+        drag to pan · scroll to zoom · <strong>0</strong> to reset ·
+        <strong>space</strong> to re-settle
+      </p>
+      <p class="fr-hint">
+        For Table view, please visit the Omeka site: <a href="https://perlgrayfr.omeka.net/">https://perlgrayfr.omeka.net/</a>
+      </p>
+    </div>
+
+    <!-- Legend. Built from FR_TAGS at load, so it never falls out
+         of sync with the data. Hover = spotlight, click = hide. -->
+    <aside class="fr-legend" id="fr-legend" aria-label="Tag clusters">
+      <p class="fr-legend-title">Clusters</p>
+      <ul id="fr-legend-list"></ul>
+      <p class="fr-legend-title fr-legend-title--second">Shapes</p>
+      <ul class="fr-shape-key">
+        <li><span class="key key--sketch"></span>sketch</li>
+        <li><span class="key key--musing"></span>text / musing</li>
+        <li><span class="key key--message"></span>message</li>
+        <li><span class="key key--interview"></span>interview</li>
+        <li><span class="key key--photo"></span>photo</li>
+      </ul>
+      <p class="fr-shape-note">Outlined = has an image.</p>
+    </aside>
+
+    <!-- The p5 canvas mounts here. Do not rename this id without
+         also changing GRAPH.containerId in memory-graph.js. -->
+    <div id="graph-stage" class="fr-stage"></div>
+
+    <!-- Data-problem banner. Hidden unless the validator at the
+         bottom of this file finds something. -->
+    <div class="fr-error" id="fr-error" hidden>
+      <p class="fr-error-title">fr-memories.js needs a look</p>
+      <ul id="fr-error-list"></ul>
+    </div>
+  </main>
+
+
+  <!-- ==========================================================
+       LIGHTBOX — hidden until a node is clicked. Populated by
+       window.onMemorySelect() below.
+       ========================================================== -->
+  <div class="fr-lightbox" id="fr-lightbox" role="dialog" aria-modal="true" hidden>
+    <div class="fr-lightbox-backdrop" data-close></div>
+
+    <figure class="fr-lightbox-panel">
+      <button class="fr-lightbox-close" data-close aria-label="Close">×</button>
+
+      <div class="fr-lightbox-media" id="lb-media"><!-- <img> injected --></div>
+
+      <figcaption class="fr-lightbox-body">
+        <p class="eyebrow" id="lb-meta"></p>
+        <h2 id="lb-title"></h2>
+        <p class="fr-lightbox-excerpt" id="lb-excerpt"></p>
+        <ul class="fr-lightbox-tags" id="lb-tags"></ul>
+        <a class="fr-lightbox-link" id="lb-link" href="#" target="_blank" rel="noopener">
+          View in the Omeka archive →
+        </a>
+      </figcaption>
+    </figure>
+  </div>
+
+
+  <!-- Data first, then the sketch — memory-graph.js reads the
+       globals that fr-memories.js defines. -->
+  <script src="fr-memories.js"></script>
+  <script src="memory-graph.js"></script>
+
+  <script>
+  // ==========================================================
+  // Page glue. Three jobs:
+  //   0. validate the data and say so on screen if it's broken
+  //   A. build the legend from FR_TAGS
+  //   B. implement window.onMemorySelect → open the lightbox
+  // All graph behaviour lives in memory-graph.js.
+  // ==========================================================
+
+  // --- 0. validation ---------------------------------------
+  // fr-memories.js is hand-edited, and one missing comma stops the
+  // browser from running the whole file — which looks exactly like
+  // "the graph is broken". This turns that into a readable message.
+  const problems = [];
+
+  function showProblems() {
+    if (!problems.length) return false;
+    const box = document.getElementById('fr-error');
+    const list = document.getElementById('fr-error-list');
+    problems.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      list.appendChild(li);
+    });
+    box.hidden = false;
+    return true;
+  }
+
+  // The fatal case: the file didn't parse, so nothing is defined.
+  if (!Array.isArray(window.FR_TAGS) || !Array.isArray(window.FR_MEMORIES)) {
+    problems.push(
+      'The file did not load at all — that means a syntax error in it. ' +
+      'Open the browser console (Cmd-Option-J); the red SyntaxError line ' +
+      'gives you the line number. The usual culprit is a missing comma ' +
+      'after the excerpt, or a stray quote mark.'
+    );
+    showProblems();
+    throw new Error('[atlas-fr] fr-memories.js unavailable — stopping.');
+  }
+
+  const tagById = {};
+  window.FR_TAGS.forEach(t => (tagById[t.id] = t));
+
+  // The non-fatal cases: the file parsed, but an entry points at
+  // something that doesn't exist. These render, just wrongly.
+  (function validateMemories() {
+    const knownTypes =
+      ['sketch', 'text', 'musing', 'message', 'interview', 'photo'];
+    const seenIds = {};
+
+    window.FR_MEMORIES.forEach((m, i) => {
+      const who = m.id || ('entry #' + (i + 1));
+
+      if (seenIds[m.id]) problems.push(who + ': duplicate id.');
+      seenIds[m.id] = true;
+
+      if (!Array.isArray(m.tags)) {
+        problems.push(
+          who + ': tags must be in square brackets, e.g. [\'musings\'].'
+        );
+      } else {
+        m.tags.forEach(t => {
+          if (!tagById[t]) {
+            problems.push(
+              who + ': tag "' + t + '" is not in FR_TAGS. Use the tag\'s ' +
+              'id, not its label.'
+            );
+          }
+        });
+      }
+
+      if (m.image && Array.isArray(m.images)) {
+        problems.push(
+          who + ': has both image and images — only images will be used. ' +
+          'Move the single path into the array and delete the image field.'
+        );
+      }
+
+      if (knownTypes.indexOf(m.type) === -1) {
+        problems.push(
+          who + ': type "' + m.type + '" is not a medium. Expected one of ' +
+          knownTypes.join(', ') + ' — type is the FORM, tags are the topic.'
+        );
+      }
+    });
+
+    showProblems();
+  })();
+
+  // --- A. legend -------------------------------------------
+  (function buildLegend() {
+    const list = document.getElementById('fr-legend-list');
+
+    window.FR_TAGS.forEach(tag => {
+      const li = document.createElement('li');
+      li.className = 'fr-legend-item';
+      li.title = tag.blurb || '';
+      li.innerHTML =
+        '<span class="fr-swatch" style="background:' + tag.color + '"></span>' +
+        '<span class="fr-legend-label">' + tag.label + '</span>';
+
+      // Hover spotlights the cluster; leaving clears it.
+      li.addEventListener('mouseenter', () => window.MemoryGraph.focusTag(tag.id));
+      li.addEventListener('mouseleave', () => window.MemoryGraph.focusTag(null));
+
+      // Click hides/shows the whole cluster.
+      li.addEventListener('click', () => {
+        const visible = window.MemoryGraph.toggleTag(tag.id);
+        li.classList.toggle('is-off', !visible);
+      });
+
+      list.appendChild(li);
+    });
+  })();
+
+  // --- B. lightbox -----------------------------------------
+  const lb = document.getElementById('fr-lightbox');
+
+  // An entry may carry a single `image` or an `images` array. This
+  // flattens both into one list so nothing downstream has to care
+  // which was used. Returns [] for text-only entries.
+  function imagesOf(memory) {
+    if (Array.isArray(memory.images)) return memory.images.filter(Boolean);
+    return memory.image ? [memory.image] : [];
+  }
+
+  // Builds the carousel markup france.css expects:
+  //   .fr-carousel > .fr-carousel-track > img.fr-carousel-slide
+  // plus the two arrow buttons. Scrolling is native (scroll-snap
+  // does the paging); the buttons just nudge the track by one
+  // slide width, so there's no index state to keep in sync.
+  function buildCarousel(srcs, altBase) {
+    const box = document.createElement('div');
+    box.className = 'fr-carousel';
+
+    const track = document.createElement('div');
+    track.className = 'fr-carousel-track';
+
+    srcs.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'fr-carousel-slide';
+      img.src = src;
+      img.alt = altBase + ' — image ' + (i + 1) + ' of ' + srcs.length;
+      track.appendChild(img);
+    });
+
+    const prev = document.createElement('button');
+    prev.className = 'fr-carousel-btn fr-carousel-btn--prev';
+    prev.setAttribute('aria-label', 'Previous image');
+
+    const next = document.createElement('button');
+    next.className = 'fr-carousel-btn fr-carousel-btn--next';
+    next.setAttribute('aria-label', 'Next image');
+
+    // scrollBy one full slide; scroll-snap settles it on the edge.
+    prev.addEventListener('click', () =>
+      track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' })
+    );
+    next.addEventListener('click', () =>
+      track.scrollBy({ left: track.clientWidth, behavior: 'smooth' })
+    );
+
+    box.appendChild(track);
+    box.appendChild(prev);
+    box.appendChild(next);
+    return box;
+  }
+
+  // Excerpts are plain text, but a memory sometimes needs emphasis —
+  // a quoted line, a French word, a title. Rather than allow raw HTML
+  // in the data file, accept two Markdown-ish marks:
+  //     *like this*   → italic
+  //     **like this** → bold
+  // Everything else is escaped first, so a stray < or & in a
+  // transcript can never break the page.
+  function formatExcerpt(text) {
+    const escaped = (text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    return escaped
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  }
+
+  window.onMemorySelect = function (memory) {
+    // Media — nothing, one image, or a carousel.
+    const media = document.getElementById('lb-media');
+    const srcs = imagesOf(memory);
+    media.innerHTML = '';
+    media.hidden = srcs.length === 0;
+
+    if (srcs.length === 1) {
+      const img = document.createElement('img');
+      img.src = srcs[0];
+      img.alt = memory.title;
+      media.appendChild(img);
+    } else if (srcs.length > 1) {
+      media.appendChild(buildCarousel(srcs, memory.title));
+    }
+
+    // Meta line: date · place · type, skipping whatever's missing
+    const meta = [memory.date, memory.place, memory.type].filter(Boolean);
+    document.getElementById('lb-meta').textContent = meta.join(' · ');
+
+    document.getElementById('lb-title').textContent = memory.title;
+    document.getElementById('lb-excerpt').innerHTML =
+      formatExcerpt(memory.excerpt);
+
+    // Tag chips, coloured to match their clusters
+    const tags = document.getElementById('lb-tags');
+    tags.innerHTML = '';
+    // Same defensive read the sketch uses: a bare string still works.
+    const tagList = Array.isArray(memory.tags)
+      ? memory.tags
+      : (memory.tags ? [memory.tags] : []);
+    tagList.forEach(id => {
+      const t = tagById[id];
+      const li = document.createElement('li');
+      li.textContent = t ? t.label : id;
+      if (t) li.style.borderColor = t.color, li.style.color = t.color;
+      tags.appendChild(li);
+    });
+
+    // Link only appears once the item exists in Omeka
+    const link = document.getElementById('lb-link');
+    link.href = memory.omekaUrl || '#';
+    link.hidden = !memory.omekaUrl;
+
+    lb.hidden = false;
+  };
+
+  function closeLightbox() { lb.hidden = true; }
+
+  lb.addEventListener('click', e => {
+    if (e.target.hasAttribute('data-close')) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+  </script>
+
+</body>
+</html>

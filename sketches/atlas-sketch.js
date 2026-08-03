@@ -61,9 +61,13 @@ let hotspotDriftRadius = 5;
 // Symbols in the painting that will become portals.
 // `active: false` keeps a symbol visible but un-clickable —
 // "mysterious rather than unfinished," per the proposal.
+//
+// NOTE ON `href`: these are resolved relative to the PAGE that loads
+// this sketch (projects/atlas.html), not relative to this file. So a
+// sibling page inside projects/ is just "atlas-fr/index.html".
 let hotspots = [
   { label: "Plane Wing", x: 0.41, y: 0.89, active: false, href: "atlas-plane-wing.html" },
-  { label: "Falaise",  x: 0.86, y: 0.79, active: false, href: "atlas-campanile.html" },
+  { label: "Falaise",    x: 0.86, y: 0.79, active: true,  href: "atlas-fr/index.html" },
   { label: "Piano",      x: 0.53, y: 0.26, active: false, href: "atlas-piano.html" },
 ];
 
@@ -182,13 +186,16 @@ function drawHotspots() {
     let hovered = isInsideCanvas() && dist(mouseX, mouseY, pos.x, pos.y) < 30;
     if (hovered) hoveringAny = true;
 
+    // Appearance is driven ONLY by hover — `active` decides whether a
+    // click opens the portal, but it never changes how a hotspot
+    // looks. At rest every symbol reads the same dim white, so the
+    // painting doesn't advertise which portals are built yet; the
+    // lime-yellow is a response to the cursor, not a status badge.
     noStroke();
-    if (spot.active) {
-      fill(224, 255, 23, 220); // lime yellow — live portal
-    } else if (hovered) {
-      fill(224, 255, 23, 200); // lights up on hover, even before the portal exists
+    if (hovered) {
+      fill(224, 255, 23, 210); // lime yellow — lit by the cursor
     } else {
-      fill(255, 255, 255, 90); // dim marker — visible but inactive
+      fill(255, 255, 255, 90); // dim marker at rest
     }
     circle(pos.x, pos.y, hovered ? 38 : 30);
   }
@@ -239,10 +246,13 @@ function mousePressed() {
 // scroll.
 
 function onHotspotClick(spot) {
-  // FUTURE HOOK: once a portal page exists for this symbol,
-  // uncomment the line below.
-  // window.location.href = spot.href;
-  console.log("Hotspot clicked:", spot.label, "— portal not built yet");
+  // Only `active: true` hotspots ever reach this function (mousePressed
+  // skips the rest), so anything arriving here has a portal to open.
+  if (spot.href) {
+    window.location.href = spot.href;
+    return;
+  }
+  console.log("Hotspot clicked:", spot.label, "— no href set");
 }
 
 function keyPressed() {
