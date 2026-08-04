@@ -1216,3 +1216,15 @@ img.archive-photo-4-3 {
     height: 52vw;
   }
 }
+
+.book-log {
+  width: 100%;
+  overflow: hidden;
+}
+
+.book-log iframe {
+  width: 100%;
+  height: 800px;
+  border: 1px solid #67675C;
+  border-radius: 1px;
+}

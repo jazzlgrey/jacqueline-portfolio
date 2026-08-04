@@ -153,7 +153,7 @@ window.FR_MEMORIES = [
     id: 'fr-002',
     title: 'mal du pays',
     type: 'musing',
-    tags: ['musings', 'language'],
+    tags: ['language'],
     date: '2025-06-18',
     place: null,
     image: null,
@@ -191,7 +191,7 @@ window.FR_MEMORIES = [
   {
     id: 'fr-005',
     title: 'just tango on - tango project, summer 2025',
-    type: 'photo',
+    type: 'interview',
     tags: ['tango'],
     date: '2025-06-19',
     place: null,
@@ -270,7 +270,7 @@ window.FR_MEMORIES = [
     id: 'fr-010',
     title: 'what am i painting when i paint?',
     type: 'sketch',
-    tags: ['camera','musings'],
+    tags: ['musings'],
     date: '2025-06-27',
     place: 'falaise d\'amont, étretat, normandie, france',
     image: '../../assets/images/atlas-fr/musings_etretat.jpeg',
@@ -284,10 +284,10 @@ window.FR_MEMORIES = [
     id: 'fr-011',
     title: 'i don\'t want to go back',
     type: 'sketch',
-    tags: ['camera','musings'],
+    tags: ['musings'],
     date: '2025-06-28',
     place: 'la plage d\'étretat, étretat, normandie, france',
-    image: '../../assets/images/atlas-fr/musings2_etretat.jpeg',
+    images: ['../../assets/images/atlas-fr/musings2_etretat.jpeg', '../../assets/images/atlas-fr/reve.jpeg'],
     excerpt: 
       '*"what\'s on my mind?\
       \n\n je ne veux pas retourner à paris. je veux rester ici, dans les montagnes, sur les falaises. et tremper mes pieds dans les galets froids. \
@@ -301,7 +301,7 @@ window.FR_MEMORIES = [
     type: 'musing',
     tags: ['musings'],
     date: '2025-06-26',
-    place: 'lobby at *les tilleuls*, étretat, normandie, france',
+    place: 'lobby at les tilleuls, étretat, normandie, france',
     image: '../../assets/images/atlas-fr/mapoeme_etretat.jpeg',
     excerpt: 
       'a poem that i wrote while i was staying at the hotel in étretat. a few days before that, i was trapped in a thunderstorm in paris\
@@ -383,6 +383,58 @@ window.FR_MEMORIES = [
     image: '../../assets/images/atlas-fr/roonie.jpeg',
     excerpt: 
       'the dignified yet oh-so-cute cyclops cat that lives at the hotel i stayed at in étretat <3',
+    omekaUrl: null
+  },
+  {
+    id: 'fr-018',
+    title: 'biking along the côte d\'azur',
+    type: 'photo',
+    tags: ['camera'],
+    date: '2025-07-12',
+    place: 'côte d\'azur, france',
+    images: ['../../assets/images/atlas-fr/bike_nice.jpeg', '../../assets/images/atlas-fr/me_biking.jpeg'],
+    excerpt: 
+      'an evening of bike riding along the côte d\'azur in nice, avec mon copain.\
+      the wind tasted like lemon and salt. the sky and the sea were so very blue...',
+    omekaUrl: null
+  },
+  {
+    id: 'fr-019',
+    title: 'where am i going?',
+    type: 'sketch',
+    tags: ['musings'],
+    date: '2025-07-07',
+    place: 'notre airbnb à paris, 4e',
+    image: '../../assets/images/atlas-fr/musings_paris_apt.jpeg',
+    excerpt: 
+      'it was raining when i wrote this. i had left the windows unlatched. through the light curtains, i could see\
+      the blue-grey apartment rooftops in a blur. piano and patrick wilson were playing on the speaker.',
+    omekaUrl: null
+  },
+  {
+    id: 'fr-020',
+    title: 'ladybug',
+    type: 'sketch',
+    tags: ['language'],
+    date: '2025-07-10',
+    place: 'gordes, provence, france',
+    images: ['../../assets/images/atlas-fr/gordes_painting.jpeg', '../../assets/images/atlas-fr/gordes_painting_home.jpeg', '../../assets/images/atlas-fr/gordes_painting_hk.jpeg'],
+    excerpt: 
+      'a print i got when visiting gordes, a stone village in provence, southern france. i brought it all the way to hong kong \
+      then back to berkeley. now it sits on the wall of my bedroom.',
+    omekaUrl: null
+  },
+  {
+    id: 'fr-021',
+    title: 'will you remember that i existed?',
+    type: 'message',
+    tags: ['conversations'],
+    date: '2025-06-28',
+    place: 'les tilleuls, étretat, normandie, france',
+    image: '../../assets/images/atlas-fr/naoko.jpg',
+    excerpt: 
+      'a deep well i stumbled upon while looking for the hotel lobby bathroom. made me think of naoko from norwegian wood, and that \
+      unfathomable well she talks about...',
     omekaUrl: null
   }
 ];
