@@ -70,7 +70,7 @@ const GRAPH = {
   // --- nodes ---
   nodeRadius: 9,          // base radius
   nodeRadiusHover: 14,
-  labelFont: '"Atkinson Hyperlegible Mono", monospace',
+  labelFont: '"Karla", sans-serif',
   labelSize: 11,
 
   // --- opacity states ---

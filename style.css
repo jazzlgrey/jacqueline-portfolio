@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
 :root {
   /* Fonts */
   --font-heading: "Instrument Serif", serif;
-  --font-body: "Atkinson Hyperlegible Mono", monospace;
-  --font-ui: "Atkinson Hyperlegible Mono", monospace;
-  --font-logo: "Atkinson Hyperlegible Mono", monospace;
+  --font-body: "Karla", sans-serif;
+  --font-ui: "Karla", sans-serif;
+  --font-logo: "Instrument Serif", serif;
 
   /* Palette */
   --black: #000000;
