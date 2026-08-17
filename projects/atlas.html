@@ -13,11 +13,165 @@
 </head>
 
 <body class="theme-black">
+
+  <!-- ==========================================================
+       ATLAS HOME — landing section above the main project. Same
+       hotspot design language as the painting (dim → lights up on
+       hover), except these float on a plain dark field instead of
+       an image. Hovering shows the destination title above the
+       dot; clicking opens a text lightbox, same visual pattern as
+       the node archive's lightbox (projects/atlas-fr).
+       ========================================================== -->
+  <section class="atlas-home">
+    <header class="atlas-overlay-header">
+      <a class="logo" href="../index.html">perlgray</a>
+
+      <nav>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../archive.html">Works</a>
+        <a href="../writing.html">Writing</a>
+      </nav>
+    </header>
+
+    <div class="atlas-home-copy">
+      <h1 class="atlas-home-title">ATLAS</h1>
+      <p class="atlas-home-subtitle">a digital archive of time</p>
+    </div>
+
+    <!-- Positions are eyeballed percentages of the section, so they
+         hold roughly in place across screen sizes. Adjust the
+         top/left values to taste. -->
+    <button
+      type="button"
+      class="atlas-home-hotspot"
+      style="top: 58%; left: 16%;"
+      data-lightbox="atlas-lb-intro"
+      aria-label="Open: Introduction"
+    >
+      <span class="atlas-home-hotspot-label">introduction</span>
+    </button>
+
+    <button
+      type="button"
+      class="atlas-home-hotspot"
+      style="top: 65%; left: 76%; animation-delay: -2.3s;"
+      data-lightbox="atlas-lb-howto"
+      aria-label="Open: How to use"
+    >
+      <span class="atlas-home-hotspot-label">how to use</span>
+    </button>
+
+    <button
+      type="button"
+      class="atlas-home-hotspot"
+      style="top: 81%; left: 25%; animation-delay: -4.6s;"
+      data-lightbox="atlas-lb-dictionary"
+      aria-label="Open: Data dictionary &amp; reading list"
+    >
+      <span class="atlas-home-hotspot-label">data dictionary &amp; reading list</span>
+    </button>
+
+    <a class="atlas-home-scroll" href="#atlas-project">scroll down to view the project</a>
+  </section>
+
+
+  <!-- ==========================================================
+       LIGHTBOXES — one per hotspot above. Structure only; content
+       left blank (.text-placeholder) to fill in later. Same visual
+       pattern as the node archive's .fr-lightbox in
+       projects/atlas-fr, scoped here as .atlas-lb so this page
+       doesn't need to load france.css.
+       ========================================================== -->
+  <div class="atlas-lb" id="atlas-lb-intro" role="dialog" aria-modal="true" hidden>
+    <div class="atlas-lb-backdrop" data-close></div>
+    <div class="atlas-lb-panel">
+      <button class="atlas-lb-close" data-close aria-label="Close">×</button>
+      <div class="atlas-lb-body">
+        <h2>Introduction | Sunset Plan</h2>
+
+        <h3>Introduction</h3>
+        <p>
+          The project takes its name from the double meaning of <em>atlas</em>: a bound collection of maps, and also the Titan 
+          condemned to carry the weight of the sky. Both are true here. Like an atlas of maps, the project is organized as 
+          a set of entrances rather than a single image -- one symbol in the painting leading to a different territory of 
+          how time is experienced. But atlas also means weight: to move repeatedly across oceans is to carry more than one 
+          place, timeline, and self at once. A flight record can tell you that UA862 left Hong Kong at 12:30 p.m. and landed 
+          in San Francisco at 9:56 a.m.; it cannot tell you whether you were leaving or returning, or what it costs to carry both. 
+          The project lives in that gap. 
+        </p>
+        <p>
+          ATLAS' foundation is a painting that I did on a similar theme, turned into an interactive reception point rather than an object observed from a distance. 
+          Viewers move through the image and enter three galleries through embedded symbols: a cartography of significant flights, 
+          a France gallery built from journal entries, sketches, and conversations from a summer abroad, and an audio-reactive gallery exploring 
+          how music, unlike a flight record or photograph, can only be known through duration.
+        </p>
+        <p>
+          The design is associative rather than chronological, following how memory moves: one image, sound, or place leading unexpectedly to another. 
+          This owes a debt to Michelle Caswell's work on the silences embedded in records, Valeria Luiselli's account of migrant stories resisting official form, 
+          Maria Eugenia Cotera's case for archives as sites of encounter rather than stable evidence, and Elijah Gaddis's treatment of fragments as meaningful in themselves.
+        </p>
+
+        <h3>Sunset plan</h3>
+        <p>
+          This project has a deliberate stopping point. By the end of the semester, the flight cartography
+          and audio-reactive piano galleries will either be finished to a working version or left dim on purpose, as fragments the project
+          doesn't resolve, consistent with its own argument about incompleteness. After that point, the site costs nothing to keep live and
+          needs no further maintenance to stay online.
+        </p>
+        <p>
+          The one point of failure is the France gallery's dependence on my Omeka account: if that lapses, the node graph survives,
+          but the canonical, catalogued record it links out to does not. Before the project closes, I'll pull a full Dublin Core export of
+          the Omeka collection into this repository as a static backup, so the documentary layer outlives the live account. Any future
+          expansion becomes its own project. 
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="atlas-lb" id="atlas-lb-howto" role="dialog" aria-modal="true" hidden>
+    <div class="atlas-lb-backdrop" data-close></div>
+    <div class="atlas-lb-panel">
+      <button class="atlas-lb-close" data-close aria-label="Close">×</button>
+      <div class="atlas-lb-body">
+        <h2>How to use</h2>
+        <p>Scroll down to the main page of ATLAS. Look for three separate grey hotspot. Hint: they are located
+          at the piano, the blue cliff, and the scarlet plane wing. Click on the hotspots to enter their respective gallery. 
+          At this point, only hotspot on the cliff is active. 
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="atlas-lb" id="atlas-lb-dictionary" role="dialog" aria-modal="true" hidden>
+    <div class="atlas-lb-backdrop" data-close></div>
+    <div class="atlas-lb-panel">
+      <button class="atlas-lb-close" data-close aria-label="Close">×</button>
+      <div class="atlas-lb-body">
+        <h2>Data dictionary &amp; reading list</h2>
+
+        <h3>Data dictionary</h3>
+        <li>Medium: sketch | photograph | poems | journal | conversations | painting | audio | creative coding 
+          <p> a range of media is used to capture the intimate and fleeting moments and feelings that cannot be described in words alone.</p>
+        </li>
+
+        <li>Languages: English | French </li>
+
+        <h3>Reading list</h3>
+        <li>Michelle Caswell — "Hannah Arendt's World: Bureaucracy, Documentation, and Banal Evil." Archivaria (2010)</li>
+        <li>Valeria Luiselli — Tell Me How It Ends</li>
+        <li>Elijah Gaddis — Gruesome Looking Objects</li>
+        <li>The District Six Huis Kombuis cookbook</li>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Full-bleed hero: the painting fills the entire viewport. The
        site header sits on top as a transparent overlay, and the
        title/intro copy is a small translucent card floating over the
        top-left of the painting, instead of a separate page section. -->
-  <main class="atlas-hero">
+  <main class="atlas-hero" id="atlas-project">
     <header class="atlas-overlay-header">
       <a class="logo" href="../index.html">perlgray</a>
 
@@ -51,5 +205,39 @@
        entire viewport with no scroll and no page chrome below it. -->
 
   <script src="../sketches/atlas-sketch.js"></script>
+
+  <!-- Home-section lightbox open/close. Independent of the p5 sketch
+       below — this only ever touches the three .atlas-lb blocks. -->
+  <script>
+    (function () {
+      var hotspots = document.querySelectorAll('.atlas-home-hotspot');
+      var lightboxes = document.querySelectorAll('.atlas-lb');
+
+      function openLightbox(id) {
+        var target = document.getElementById(id);
+        if (target) target.hidden = false;
+      }
+
+      function closeAllLightboxes() {
+        lightboxes.forEach(function (lb) { lb.hidden = true; });
+      }
+
+      hotspots.forEach(function (hotspot) {
+        hotspot.addEventListener('click', function () {
+          openLightbox(hotspot.getAttribute('data-lightbox'));
+        });
+      });
+
+      lightboxes.forEach(function (lb) {
+        lb.addEventListener('click', function (e) {
+          if (e.target.hasAttribute('data-close')) closeAllLightboxes();
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAllLightboxes();
+      });
+    })();
+  </script>
 </body>
 </html>

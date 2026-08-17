@@ -165,7 +165,7 @@ window.FR_MEMORIES = [
   },
   {
     id: 'fr-003',
-    title: 'martin chez coffee avec des livres et des pattisseries',
+    title: 'matin chez coffee avec des livres et des pattisseries',
     type: 'photo',
     tags: ['camera'],
     date: '2025-06-20',
