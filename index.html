@@ -3,17 +3,710 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>perlgray | sketchbook</title>
+  <meta name="description" content="Jacqueline Song — Artist & Creative Technologist. An alternate entrance: a sketchbook of notes, studies and records." />
 
-  <title>perlgray | Art & Creative Coding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Special+Elite&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    @font-face {
+      font-family: "Season Serif";
+      src: url("assets/fonts/SeasonSerif-TRIAL-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Season Serif";
+      src: url("assets/fonts/SeasonSerif-TRIAL-RegularItalic.ttf") format("truetype");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    :root {
+      --desk: #09090a;
+      --desk-2: #131416;
+      --paper: #ccc2bc;
+      --paper-2: #cbcdcc;
+      --paper-edge: #a9acae;
+      --graphite: #26282b;
+      --graphite-soft: rgba(38, 40, 43, 0.62);
+      --sepia: #6c7177;
+      --amber: #b9bec4;
+      --amethyst: #3B003E;
+      --lime: #E0FF17;
+      --on-dark: #d9dbdd;
+      --on-dark-dim: rgba(217, 219, 221, 0.55);
+      --on-dark-faint: rgba(217, 219, 221, 0.22);
+      --hairline: rgba(217, 219, 221, 0.1);
+
+      --font-serif: "Season Serif", "Times New Roman", serif;
+      --font-hand: "Cedarville Cursive", cursive;
+      --font-type: "Special Elite", "Courier New", monospace;
+      --font-ui: "Inter", sans-serif;
+
+      --book-w: max(560px, min(92vw, 1120px, calc((100svh - 300px) * 1.5)));
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: var(--desk); }
+
+    body {
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 110%, rgba(59, 0, 62, 0.42), transparent 70%) fixed,
+        radial-gradient(ellipse 70% 55% at 50% 38%, #25272a 0%, #131416 48%, var(--desk) 100%) fixed,
+        var(--desk);
+      color: var(--on-dark);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    ::selection { background: var(--lime); color: var(--amethyst); }
+
+    /* ---------- film fx overlay ---------- */
+    .sb-fx { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+
+    .sb-fx .grain {
+      position: absolute;
+      inset: -50%;
+      opacity: 0.11;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      animation: grain 0.9s steps(5) infinite;
+    }
+    @keyframes grain {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-4%, 3%); }
+      40% { transform: translate(3%, -2%); }
+      60% { transform: translate(-2%, -4%); }
+      80% { transform: translate(4%, 2%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .sb-fx .flicker {
+      position: absolute;
+      inset: 0;
+      background: rgba(225, 232, 240, 0.025);
+      animation: flicker 5s steps(1) infinite;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      12% { opacity: 0.4; }
+      13% { opacity: 1; }
+      47% { opacity: 0.7; }
+      48% { opacity: 1; }
+      71% { opacity: 0.3; }
+      72% { opacity: 1; }
+    }
+
+    .sb-fx .line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(225, 230, 236, 0.16) 20%, rgba(225, 230, 236, 0.08) 70%, transparent);
+      opacity: 0;
+      animation: scratch 9s steps(1) infinite;
+    }
+    .sb-fx .line:nth-child(4) { animation-duration: 13s; animation-delay: -4s; }
+    @keyframes scratch {
+      0% { left: 18%; opacity: 0.9; }
+      4% { left: 18.3%; opacity: 0; }
+      31% { left: 71%; opacity: 0.7; }
+      33% { opacity: 0; }
+      62% { left: 43%; opacity: 0.6; }
+      64% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .sb-fx .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+    }
+
+    /* ---------- header ---------- */
+    .sb-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1.4rem clamp(1rem, 4vw, 3rem) 1.1rem;
+    }
+
+    .sb-logo {
+      font-family: var(--font-serif);
+      font-style: normal;
+      font-size: 1.6rem;
+      text-decoration: none;
+    }
+
+    .sb-nav { display: flex; gap: clamp(0.9rem, 2.4vw, 2rem); flex-wrap: wrap; justify-content: flex-end; }
+    .sb-nav a {
+      font-family: var(--font-type);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--on-dark-dim);
+      transition: color 0.3s ease;
+    }
+    .sb-nav a:hover { color: var(--on-dark); }
+
+    /* ---------- film strip ---------- */
+    .sb-film {
+      position: relative;
+      overflow: hidden;
+      background: #0e0f10;
+      border-block: 1px solid #1c1d20;
+    }
+    .sb-film::before, .sb-film::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 12vw;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .sb-film::before { left: 0; background: linear-gradient(to right, var(--desk), transparent); }
+    .sb-film::after { right: 0; background: linear-gradient(to left, var(--desk), transparent); }
+
+    .sb-reel {
+      display: flex;
+      width: max-content;
+      animation: reel 120s linear infinite;
+    }
+    .sb-film:hover .sb-reel { animation-play-state: paused; }
+    @keyframes reel { to { transform: translateX(-50%); } }
+
+    .sb-frame {
+      position: relative;
+      display: block;
+      width: 132px;
+      padding: 17px 5px;
+      background: #17181a;
+      border-right: 1px solid #0a0a0b;
+    }
+    .sb-frame::before, .sb-frame::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(90deg, transparent 0 5px, rgba(200, 205, 210, 0.42) 5px 13px, transparent 13px 22px);
+    }
+    .sb-frame::before { top: 5px; }
+    .sb-frame::after { bottom: 5px; }
+
+    .sb-frame img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      filter: grayscale(1) brightness(0.74) contrast(1.15);
+      transition: filter 0.6s ease;
+    }
+    .sb-frame:hover img, .sb-frame:focus-visible img { filter: grayscale(0.3) brightness(0.95); }
+
+    .sb-frame span {
+      position: absolute;
+      left: 7px;
+      bottom: -1px;
+      font-family: var(--font-type);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+      opacity: 0.55;
+      z-index: 1;
+    }
+
+    /* ---------- desk + book ---------- */
+    .sb-desk {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(1.6rem, 4vh, 2.8rem) 16px 1.4rem;
+    }
+
+    .sb-book {
+      position: relative;
+      width: var(--book-w);
+      aspect-ratio: 3 / 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      perspective: 2800px;
+      border-radius: 3px;
+      box-shadow:
+        0 1px 0 #c4c6c7, 0 2px 0 #9a9da0, 0 3px 0 #bfc1c3, 0 4px 0 #8e9195, 0 5px 0 #b7babc,
+        0 34px 70px rgba(0, 0, 0, 0.7), 0 12px 24px rgba(0, 0, 0, 0.5);
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* the stitched spine */
+    .sb-book::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      margin-left: -1px;
+      background: repeating-linear-gradient(to bottom, rgba(50, 53, 58, 0.45) 0 10px, transparent 10px 22px);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .sb-page {
+      position: relative;
+      container-type: inline-size;
+      overflow: hidden;
+      color: var(--graphite);
+      background:
+        radial-gradient(circle at 22% 14%, rgba(96, 102, 110, 0.10), transparent 38%),
+        radial-gradient(circle at 78% 86%, rgba(96, 102, 110, 0.12), transparent 42%),
+        radial-gradient(circle at 60% 40%, rgba(250, 248, 246, 0.16), transparent 60%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.36  0 0 0 0 0.38  0 0 0 0 0.41  0 0 0 0.15 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>"),
+        var(--paper);
+      cursor: pointer;
+    }
+    .sb-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      box-shadow: inset 0 0 7cqw rgba(70, 75, 82, 0.3);
+    }
+    .sb-page.is-left { border-radius: 3px 0 0 3px; }
+    .sb-page.is-left::after,
+    .sb-page.is-right::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 16cqw;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .sb-page.is-left::after { right: 0; background: linear-gradient(to left, rgba(40, 43, 48, 0.36), rgba(40, 43, 48, 0.07) 40%, transparent); }
+    .sb-page.is-right { border-radius: 0 3px 3px 0; }
+    .sb-page.is-right::after { left: 0; background: linear-gradient(to right, rgba(40, 43, 48, 0.36), rgba(40, 43, 48, 0.07) 40%, transparent); }
+    .sb-page.is-single { border-radius: 3px; }
+    .sb-page:empty { cursor: default; }
+
+    /* page-turn leaf */
+    .sb-leaf {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      transform-style: preserve-3d;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .sb-leaf.fwd { left: 50%; transform-origin: left center; }
+    .sb-leaf.back { left: 0; transform-origin: right center; }
+    .sb-leaf.single { left: 0; width: 100%; transform-origin: left center; }
+    .sb-leaf .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .sb-leaf .face.rear { transform: rotateY(180deg); }
+    .sb-leaf .shade {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: linear-gradient(to right, rgba(28, 30, 34, 0.5), rgba(28, 30, 34, 0.12));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ---------- page content ---------- */
+    .pg {
+      position: absolute;
+      inset: 7cqw 8cqw 8cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 2.6cqw;
+      z-index: 1;
+    }
+
+    .note {
+      font-family: var(--font-hand);
+      font-size: max(4.4cqw, 13px);
+      line-height: 1.35;
+      color: var(--graphite);
+      transform: rotate(var(--r, -1deg));
+    }
+    .note.sm { font-size: max(3.4cqw, 11px); color: var(--graphite-soft); }
+    .note a { text-decoration: none; border-bottom: 1px solid rgba(38, 40, 43, 0.35); }
+    .note a:hover { border-bottom-color: var(--graphite); }
+
+    .typed {
+      font-family: var(--font-type);
+      font-size: max(2.5cqw, 8.5px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--graphite-soft);
+      line-height: 1.6;
+    }
+
+    .title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 10cqw;
+      line-height: 0.95;
+      color: var(--graphite);
+    }
+    .title.roman { font-style: normal; }
+    .title.huge { font-size: 19cqw; letter-spacing: -0.01em; }
+
+    .scratch { position: relative; white-space: nowrap; }
+    .scratch::after {
+      content: "";
+      position: absolute;
+      inset: -12% -5%;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 26' preserveAspectRatio='none'><path d='M2 15 C 8 3, 14 25, 21 10 S 33 2, 39 19 S 52 4, 58 16 S 71 1, 77 18 S 90 5, 98 12 M3 9 C 14 22, 24 3, 36 15 S 58 23, 66 8 S 86 22, 97 6' fill='none' stroke='%2326282b' stroke-width='2.4' stroke-linecap='round'/></svg>") center / 100% 100% no-repeat;
+      opacity: 0.88;
+    }
+
+    .pnum {
+      position: absolute;
+      bottom: 3.6cqw;
+      font-family: var(--font-type);
+      font-size: max(2.2cqw, 8px);
+      color: var(--graphite-soft);
+      z-index: 1;
+    }
+    .is-left .pnum, .rear.is-left .pnum { left: 6cqw; }
+    .is-right .pnum, .is-single .pnum { right: 6cqw; }
+
+    .photo {
+      position: relative;
+      width: var(--w, 70%);
+      background: #f1f2f2;
+      padding: 1.3cqw;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22), 0 7px 16px rgba(30, 33, 38, 0.22);
+      transform: rotate(var(--r, 0deg));
+      flex-shrink: 0;
+    }
+    .photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: var(--ar, 3 / 4);
+      object-fit: cover;
+      filter: grayscale(0.35) contrast(1.04) brightness(0.98);
+      transition: filter 0.8s ease;
+      -webkit-user-drag: none;
+    }
+    .photo:hover img { filter: none; }
+    .photo.tape::before, .photo.tape::after {
+      content: "";
+      position: absolute;
+      top: -2.2cqw;
+      width: 13cqw;
+      height: 4.4cqw;
+      background: rgba(236, 239, 242, 0.62);
+      backdrop-filter: blur(1px);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+      z-index: 1;
+    }
+    .photo.tape::before { left: 6%; transform: rotate(-9deg); }
+    .photo.tape::after { right: 6%; transform: rotate(7deg); }
+    .photo.corners { padding: 0; background: none; box-shadow: 0 6px 14px rgba(30, 33, 38, 0.24); }
+    .photo.corners::before, .photo.corners::after {
+      content: "";
+      position: absolute;
+      width: 6cqw;
+      height: 6cqw;
+      border: 1.4cqw solid #2a2c30;
+      z-index: 1;
+    }
+    .photo.corners::before { top: -0.6cqw; left: -0.6cqw; border-right: 0; border-bottom: 0; }
+    .photo.corners::after { bottom: -0.6cqw; right: -0.6cqw; border-left: 0; border-top: 0; }
+
+    .row { display: flex; gap: 4cqw; align-items: flex-start; }
+    .spacer { flex: 1; }
+    .center { align-self: center; }
+    .end { align-self: flex-end; }
+
+    .records { list-style: none; display: flex; flex-direction: column; gap: 1.1cqw; }
+    .records li { display: flex; gap: 1.6cqw; align-items: baseline; }
+    .records li::after { content: none; }
+    .records .dots { flex: 1; border-bottom: 1px dotted rgba(38, 40, 43, 0.4); transform: translateY(-0.6cqw); }
+    .records a { text-decoration: none; }
+    .records a:hover { color: var(--graphite); text-decoration: underline; }
+
+    .rule { height: 1px; background: rgba(38, 40, 43, 0.25); }
+
+
+    /* dark pages (The Stranger) */
+    .sb-page:has(.pg.dark) {
+      background:
+        radial-gradient(circle at 60% 40%, rgba(120, 128, 160, 0.06), transparent 60%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.7  0 0 0 0 0.72  0 0 0 0 0.8  0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>"),
+        #10111a;
+    }
+    .sb-page:has(.pg.dark)::before { box-shadow: inset 0 0 7cqw rgba(0, 0, 0, 0.45); }
+    .pg.dark .title { color: #e6e7ec; }
+    .pg.dark .typed { color: rgba(230, 231, 236, 0.6); }
+    .pg.dark .note { color: rgba(230, 231, 236, 0.78); }
+    .pg.dark .note a { border-bottom-color: rgba(230, 231, 236, 0.35); }
+    .pg.dark .photo.corners::before, .pg.dark .photo.corners::after { border-color: #b9bdc6; }
+    .sb-page:has(.pg.dark) .pnum { color: rgba(230, 231, 236, 0.5); }
+
+    /* full-bleed photo page with the title laid over it */
+    .bleed { position: absolute; inset: 0; z-index: 1; background: #0b0b0c; }
+    .bleed > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.35) contrast(1.04) brightness(0.92);
+      transition: filter 0.8s ease;
+      -webkit-user-drag: none;
+    }
+    .bleed:hover > img { filter: none; }
+    .bleed::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(8, 8, 9, 0.72), rgba(8, 8, 9, 0) 34%),
+        linear-gradient(to top, rgba(8, 8, 9, 0.78), rgba(8, 8, 9, 0) 30%);
+    }
+    .bleed-text {
+      position: absolute;
+      inset: 7cqw 8cqw 9cqw;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2.6cqw;
+      pointer-events: none;
+    }
+    .bleed-text a { pointer-events: auto; }
+    .bleed-text .title { color: #eef0f2; }
+    .bleed-text .typed { color: rgba(238, 240, 242, 0.72); }
+    .bleed-text .note { color: rgba(238, 240, 242, 0.85); }
+    .bleed-text .note a { border-bottom-color: rgba(238, 240, 242, 0.4); }
+    .sb-page:has(.bleed) .pnum { color: rgba(238, 240, 242, 0.6); z-index: 3; }
+
+    /* ---------- controls ---------- */
+    .sb-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      margin-top: 1.8rem;
+      font-family: var(--font-type);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: var(--on-dark-dim);
+    }
+    .sb-controls button {
+      padding: 0.5rem 0.7rem;
+      letter-spacing: 0.12em;
+      font-family: var(--font-type);
+      color: var(--on-dark-dim);
+      transition: color 0.3s ease;
+    }
+    .sb-controls button:hover:not(:disabled) { color: var(--on-dark); }
+    .sb-controls button:disabled { opacity: 0.25; cursor: default; }
+    .sb-controls output { min-width: 9.5em; text-align: center; color: var(--lime); opacity: 0.85; }
+
+    .sb-hint {
+      margin-top: 0.4rem;
+      font-family: var(--font-hand);
+      font-size: 1rem;
+      color: var(--on-dark-faint);
+    }
+
+    /* ---------- contact sheet ---------- */
+    .sb-sheet {
+      padding: clamp(3.5rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+      max-width: 78rem;
+      margin: 0 auto;
+    }
+    .sb-sheet-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 0.9rem;
+      margin-bottom: 2rem;
+      font-family: var(--font-type);
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--on-dark-dim);
+    }
+    .sb-sheet-head h2 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--on-dark);
+    }
+
+    .sb-minis {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+      gap: 2.2rem 1.6rem;
+    }
+
+    .sb-mini { text-align: left; display: block; width: 100%; }
+    .sb-mini .spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      aspect-ratio: 3 / 2;
+      background: var(--paper);
+      border-radius: 2px;
+      box-shadow: 0 1px 0 #9a9da0, 0 2px 0 #bfc1c3, 0 14px 26px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+      filter: brightness(0.7) grayscale(0.1);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+    .sb-mini:hover .spread, .sb-mini:focus-visible .spread, .sb-mini.is-current .spread { filter: none; transform: translateY(-3px); }
+    .sb-mini .half {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12%;
+    }
+    .sb-mini .half:first-child { box-shadow: inset -8px 0 10px -6px rgba(40, 43, 48, 0.4); }
+    .sb-mini .half:last-child { box-shadow: inset 8px 0 10px -6px rgba(40, 43, 48, 0.4); }
+    .sb-mini img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      box-shadow: 0 2px 5px rgba(28, 30, 34, 0.3);
+      filter: grayscale(0.4);
+    }
+    .sb-mini .lines {
+      width: 80%;
+      height: 60%;
+      background: repeating-linear-gradient(to bottom, transparent 0 7px, rgba(38, 40, 43, 0.28) 7px 8px);
+      -webkit-mask: linear-gradient(to right, #000 70%, transparent);
+      mask: linear-gradient(to right, #000 70%, transparent);
+    }
+    .sb-mini figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+      font-family: var(--font-type);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--on-dark-dim);
+    }
+    .sb-mini.is-current figcaption { color: var(--lime); }
+
+    /* ---------- footer ---------- */
+    .sb-footer {
+      border-top: 1px solid var(--hairline);
+      padding: 2.4rem clamp(1rem, 5vw, 4rem) 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.8rem 3rem;
+      font-family: var(--font-type);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--on-dark-dim);
+    }
+    .sb-footer > div { display: flex; flex-direction: column; gap: 0.45rem; }
+    .sb-footer .links { text-align: right; }
+    .sb-footer a { text-decoration: none; transition: color 0.3s ease; }
+    .sb-footer a:hover { color: var(--on-dark); }
+    .sb-footer .other {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--on-dark-faint);
+    }
+    .sb-footer .other a { border-bottom: 1px solid var(--hairline); }
+
+
+    /* ---------- accents ---------- */
+    :focus-visible { outline: 1px solid var(--lime); outline-offset: 3px; }
+    .sb-nav a:hover { color: var(--lime); }
+
+    /* handwritten links are written in amethyst ink */
+    .note a { color: var(--amethyst); border-bottom-color: rgba(59, 0, 62, 0.4); background: linear-gradient(transparent 55%, rgba(224, 255, 23, 0) 55%) no-repeat; transition: background-color 0.3s ease; }
+    .note a:hover { border-bottom-color: var(--amethyst); background-color: rgba(224, 255, 23, 0.55); }
+    .typed a:hover, .records a:hover { color: var(--amethyst); }
+    /* on dark pages and over photos the ink would vanish, so links turn lime */
+    .pg.dark .note a, .bleed-text .note a { color: var(--lime); border-bottom-color: rgba(224, 255, 23, 0.4); }
+    .pg.dark .note a:hover, .bleed-text .note a:hover { background-color: transparent; border-bottom-color: var(--lime); }
+
+    /* one highlighter stroke */
+    .hl {
+      background: linear-gradient(100deg, transparent 0.4em, rgba(224, 255, 23, 0.72) 0.6em, rgba(224, 255, 23, 0.6) calc(100% - 0.5em), transparent calc(100% - 0.3em));
+      background-size: 100% 58%;
+      background-position: 0 72%;
+      background-repeat: no-repeat;
+      mix-blend-mode: multiply;
+      padding: 0 0.25em;
+      margin: 0 -0.25em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+
+    /* ---------- small screens: one page at a time ---------- */
+    @media (max-width: 719px) {
+      :root { --book-w: min(calc(100vw - 32px), calc((100svh - 250px) * 0.75)); }
+      .sb-header { flex-direction: column; gap: 0.7rem; }
+      .sb-nav { justify-content: flex-start; gap: 0.6rem 1rem; }
+      .sb-book { aspect-ratio: 3 / 4; grid-template-columns: 1fr; min-width: 260px; }
+      .sb-book::after { display: none; }
+      #pageR { display: none; }
+      .sb-frame { width: 104px; }
+      .sb-footer { grid-template-columns: 1fr; }
+      .sb-footer .links { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sb-fx .grain, .sb-fx .flicker, .sb-fx .line, .sb-reel { animation: none; }
+    }
+  </style>
 </head>
 
 <body>
-  <header>
-    <a class="logo" href="index.html">perlgray</a>
+  <div class="sb-fx" aria-hidden="true">
+    <div class="grain"></div>
+    <div class="flicker"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="vignette"></div>
+  </div>
 
-    <nav>
+  <header class="sb-header">
+    <a class="sb-logo" href="index-sketchbook.html">perlgray</a>
+    <nav class="sb-nav">
       <a href="about.html">About</a>
       <a href="projects.html">Projects</a>
       <a href="archive.html">Works</a>
@@ -22,66 +715,475 @@
     </nav>
   </header>
 
-  <main>
-    <section class="home-hero">
-      <img src="assets/images/Home_Collage_L.png" alt="Jacqueline Song portrait" class="home-hero-image--left">
+  <div class="sb-film" aria-label="Film strip of works">
+    <div class="sb-reel" id="reel"></div>
+  </div>
 
-      <div class="home-hero-text">
-        <p class="home-name">JACQUELINE SONG</p>
-        <p class="home-role">Artist &amp;<br />Creative<br />Technologist</p>
-      </div>
-
-      <!-- Replace with <img src="assets/images/your-artwork.jpg" alt="Featured artwork"> -->
-       <img src="assets/images/Home_Collage_R.png" alt="porcelain dargon art" class="home-hero-image--right">
-
-      <div class= class="home-hero-text">
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <div class="discover-more">
-      Projects<br />
-      Discover more
-      <span class="discover-arrow">&#9660;</span>
+  <main class="sb-desk">
+    <div class="sb-book" id="book" aria-live="polite">
+      <div class="sb-page is-left" id="pageL"></div>
+      <div class="sb-page is-right" id="pageR"></div>
     </div>
 
-    <section class="tile-grid">
-
-      <a class="project-tile" href="archive.html">
-        <img src="assets/images/archive_images/The Stranger Part II_Details.jpeg" alt="Archive" class="placeholder-square">
-        <p class="tile-caption">Archive</p>
-      </a>
-
-      <a class="project-tile" href="https://perlgray.com/projects/atlas">
-        <img src="assets/images/ua862.jpeg" alt="Project ATLAS" class="placeholder-square">
-        <p class="tile-caption">ATLAS | interactive digital installation </p>
-      </a>
-    </section>
-
-    <div class="discover-more">
-      <embed src="https://perlgray.com/projects/atlas-fr/index.html" width="100%" height="800px" />
+    <div class="sb-controls">
+      <button type="button" id="prev" aria-label="Previous page">← prev</button>
+      <output id="counter">pp. 01 — 02</output>
+      <button type="button" id="next" aria-label="Next page">next →</button>
     </div>
-
+    <p class="sb-hint">click the corner, use the arrow keys, or swipe</p>
   </main>
 
-  <footer class="site-footer footer-olive">
-    <div class="footer-info">
-      <span>Jacqueline Song</span>
-      <span>Creative Technologist</span>
-      <span>Berkeley, CA | Hong Kong</span>
+  <section class="sb-sheet" aria-labelledby="sheet-title">
+    <div class="sb-sheet-head">
+      <h2 id="sheet-title">contact sheet</h2>
+      <span id="sheet-count"></span>
     </div>
+    <div class="sb-minis" id="minis"></div>
+  </section>
 
-    <div class="footer-links">
+  <footer class="sb-footer">
+    <div>
+      <span>jacqueline song</span>
+      <span>artist & creative technologist</span>
+      <span>berkeley, ca | hong kong</span>
+    </div>
+    <div class="links">
       <a href="mailto:itsjacquelinehere@gmail.com">Email</a>
-      
-      <a href="https://www.instagram.com/perlgray/" target="_blank" rel="noopener">Insta</a>
+      <a href="https://www.instagram.com/perlgray/" target="_blank" rel="noopener">Gallery</a>
       <a href="https://www.linkedin.com/in/jacqueline-song">LinkedIn</a>
-    </div>
-    
-    <div class="footer-wordmark">
-      <span>perlgray</span>
-    </div>
+    </div> 
   </footer>
+
+  <!-- ======================= the pages ======================= -->
+
+  <template data-label="title">
+    <div class="pg">
+      <div class="spacer"></div>
+      <h1 class="title huge roman">perlgray</h1>
+      <p class="note" style="--r:-2deg">property of jacqueline song —<br>if <span class="scratch">lost</span> found, please contact <br>itsjacquelinehere@gmail.com</p>
+      <div class="spacer"></div>
+      <div class="rule"></div>
+      <p class="note sm end" style="--r:-4deg">turn the page →</p>
+    </div>
+  </template>
+
+  <template data-label="about">
+    <div class="pg">
+      <div class="photo tape center" style="--w:60%; --r:2deg">
+        <img src="assets/images/sketchbook/portrait.jpg" alt="My Photo" />
+      </div>
+      <p class="note" style="--r:-1.5deg"><span class="hl">i like making things beautiful.</span></p>
+      <div class="spacer"></div>
+      <p class="typed"><a href="about.html">→ about</a></p>
+    </div>
+  </template>
+
+  <template data-label="dreaming in obsidian">
+    <div class="bleed">
+      <img src="assets/images/sketchbook/dreaming-obsidian.jpg" alt="dreaming in obsidian, collage" />
+      <div class="bleed-text">
+        <p class="typed">pl. 01</p>
+        <h2 class="title">dreaming in obsidian</h2>
+        <div class="spacer"></div>
+        <p class="typed">mixed media | oil and graphite on flattened delivery box</p>
+        <p class="note sm" style="--r:-2deg"><a href="https://perlgray.substack.com/p/dreaming-in-obsidian?utm_campaign=post&utm_medium=web">read more about how i made this →</a></p>
+      </div>
+    </div>
+  </template>
+
+  <template data-label="dreaming in obsidian">
+    <div class="pg">
+      <p class="typed end">pl. 02</p>
+      <h2 class="title end">detail</h2>
+      <div class="photo corners" style="--w:56%; --ar:1/1; --r:-1deg; margin-top:-11cqw">
+        <img src="assets/images/sketchbook/dreaming-detail.jpg" alt="process photo" />
+      </div>
+      <div class="row" style="justify-content:flex-end; margin-top:-3cqw">
+        <div class="photo tape" style="--w:50%; --ar:4/3; --r:2deg; z-index:2">
+          <img src="assets/images/sketchbook/dreaming-1.jpg" alt="dreaming in obsidian, in progress" />
+        </div>
+        <div class="photo tape" style="--w:56%; --ar:4/3; --r:-2.5deg; margin-top:9cqw; margin-left:-9cqw; z-index:1">
+          <img src="assets/images/sketchbook/dreaming-2.jpg" alt="dreaming in obsidian, in progress" />
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <p class="typed end">this & raining outside...</p>
+    </div>
+  </template>
+
+  <template data-label="atlas — studies">
+    <div class="pg">
+      <p class="typed">pl. 03</p>
+      <h2 class="title">Atlas</h2>
+      <p class="note" style="--r:-2deg">studies — <span class="scratch">first</span> ua862<br>sketch, then process</p>
+      <div class="row" style="margin-top:2cqw">
+        <div class="photo tape" style="--w:48%; --r:-3deg">
+          <img src="assets/images/sketchbook/atlas-sketch.jpg" alt="Sketch for Atlas" />
+        </div>
+        <div class="photo" style="--w:46%; --r:2.5deg; margin-top:8cqw">
+          <img src="assets/images/sketchbook/ua862-process.jpg" alt="Process photo of ua862" />
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <p class="typed">fig. a — sketch &nbsp;&nbsp; fig. b — process</p>
+    </div>
+  </template>
+
+  <template data-label="atlas — ua862">
+    <div class="pg">
+      <div class="photo corners center" style="--w:60%; --ar:317/480; --r:-1deg; margin-top:2cqw">
+        <img src="assets/images/sketchbook/ua862.jpg" alt="ua862, the painting at the centre of Atlas" />
+      </div>
+      <div class="spacer"></div>
+      <p class="typed">atlas — interactive digital installation</p>
+      <p class="note" style="--r:-2deg"><a href="projects/atlas.html">open the installation →</a></p>
+    </div>
+  </template>
+
+  <template data-label="matins">
+    <div class="bleed">
+      <img src="assets/images/sketchbook/matins.jpg" alt="Matins" />
+      <div class="bleed-text">
+        <p class="typed">pl. 04</p>
+        <h2 class="title">Matins</h2>
+      </div>
+    </div>
+  </template>
+
+  <template data-label="vespers">
+    <div class="bleed">
+      <img src="assets/images/sketchbook/vespers.jpg" alt="Vespers" />
+      <div class="bleed-text">
+        <p class="typed end">pl. 05</p>
+        <h2 class="title end">Vespers</h2>
+      </div>
+    </div>
+  </template>
+
+  <template data-label="the stranger i">
+    <div class="pg dark">
+      <p class="typed">pl. 06</p>
+      <h2 class="title">The Stranger</h2>
+      <div class="photo corners center" style="--w:58%; --ar:322/480; --r:-1deg; margin-top:3cqw">
+        <img src="assets/images/sketchbook/stranger-1.jpg" alt="The Stranger, Part I" />
+      </div>
+      <div class="spacer"></div>
+      <p class="typed">part i</p>
+    </div>
+  </template>
+
+  <template data-label="the stranger ii">
+    <div class="pg dark">
+      <p class="note sm" style="--r:-2deg">continued —</p>
+      <div class="spacer"></div>
+      <div class="photo tape center" style="--w:92%; --ar:4/3; --r:1.5deg">
+        <img src="assets/images/sketchbook/stranger-2.jpg" alt="The Stranger, Part II" />
+      </div>
+      <div class="spacer"></div>
+      <p class="typed end">part ii</p>
+      <p class="note sm end" style="--r:2deg"><a href="archive.html">more in the archive →</a></p>
+    </div>
+  </template>
+
+  <template data-label="slumberland, monster">
+    <div class="pg">
+      <p class="typed">pl. 07 — 08</p>
+      <div class="photo tape" style="--w:66%; --ar:480/403; --r:-2.5deg; margin-top:3cqw">
+        <img src="assets/images/sketchbook/slumberland.jpg" alt="Slumberland" />
+      </div>
+      <p class="note sm" style="--r:-1deg; margin-left:4cqw">slumberland</p>
+      <div class="photo tape end" style="--w:62%; --ar:480/387; --r:2deg">
+        <img src="assets/images/sketchbook/monster.jpg" alt="Monster" />
+      </div>
+      <p class="note sm end" style="--r:1deg; margin-right:4cqw">monster</p>
+    </div>
+  </template>
+
+  <template data-label="gymnopédie, exhibition">
+    <div class="pg">
+      <p class="typed end">pl. 09</p>
+      <div class="photo corners" style="--w:68%; --ar:4/3; --r:1.5deg; margin-top:3cqw">
+        <img src="assets/images/sketchbook/gymnopedie.jpg" alt="Gymnopédie" />
+      </div>
+      <p class="note sm" style="--r:-2deg; margin-left:3cqw">gymnopédie</p>
+      <div class="photo tape end" style="--w:64%; --ar:4/3; --r:-2deg">
+        <img src="assets/images/sketchbook/exhibition-1.jpg" alt="Exhibition view" />
+      </div>
+      <p class="note sm end" style="--r:1deg">on the wall —</p>
+    </div>
+  </template>
+
+  <template data-label="records">
+    <div class="pg">
+      <div class="photo tape center" style="--w:72%; --ar:4/3; --r:-1.5deg; margin-top:2cqw">
+        <img src="assets/images/sketchbook/exhibition-2.jpg" alt="Exhibition view" />
+      </div>
+      <h2 class="title" style="font-size:7cqw; margin-top:2cqw">records</h2>
+      <ol class="records typed">
+        <li><a href="https://perlgray.substack.com/p/dreaming-in-obsidian?utm_campaign=post&utm_medium=web">01 dreaming in obsidian</a><span class="dots"></span><span>p. 3</span></li>
+        <li><a href="projects/atlas.html">02 atlas</a><span class="dots"></span><span>p. 5</span></li>
+        <li><a href="archive.html">03 matins</a><span class="dots"></span><span>p. 7</span></li>
+        <li><a href="archive.html">04 vespers</a><span class="dots"></span><span>p. 8</span></li>
+        <li><a href="archive.html">05 the stranger</a><span class="dots"></span><span>p. 9</span></li>
+        <li><a href="archive.html">06 slumberland, monster</a><span class="dots"></span><span>p. 11</span></li>
+        <li><a href="archive.html">07 gymnopédie</a><span class="dots"></span><span>p. 12</span></li>
+      </ol>
+    </div>
+  </template>
+
+  <template data-label="elsewhere">
+    <div class="pg">
+      <p class="typed">elsewhere</p>
+      <p class="note" style="--r:-1.5deg; line-height:1.7">
+        <a href="https://substack.com/@perlgray">writing</a><br>
+        <a href="booklog.html">booklog</a><br>
+        <a href="projects.html">all projects</a><br>
+        <span class="scratch">letters</span> <a href="mailto:itsjacquelinehere@gmail.com">write to me</a><br>
+        <a href="https://www.instagram.com/perlgray/" target="_blank" rel="noopener">instagram</a> ·
+        <a href="https://www.linkedin.com/in/jacqueline-song">linkedin</a>
+      </p>
+      <div class="spacer"></div>
+      <div class="rule"></div>
+      <p class="title roman center" style="font-size:8cqw">perlgray</p>
+      <p class="typed center">— end of book —</p>
+    </div>
+  </template>
+
+  <script>
+  (() => {
+    const tpls = [...document.querySelectorAll("template[data-label]")];
+    const N = tpls.length;
+    const book = document.getElementById("book");
+    const L = document.getElementById("pageL");
+    const R = document.getElementById("pageR");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const counter = document.getElementById("counter");
+    const single = window.matchMedia("(max-width: 719px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const pad = n => String(n).padStart(2, "0");
+
+    let idx = 0;      // left page of the spread (two-up) or current page (one-up)
+    let busy = false;
+
+    const step = () => (single.matches ? 1 : 2);
+    const firstImg = i => tpls[i]?.content.querySelector("img")?.getAttribute("src");
+    // small copy for the strip and contact sheet; leave paths already in thumbs/ alone
+    const thumb = src => (src.includes("/thumbs/") ? src : src.replace("/sketchbook/", "/sketchbook/thumbs/"));
+
+    function fill(el, i, side) {
+      el.className = "sb-page is-" + side;
+      if (i < 0 || i >= N) { el.replaceChildren(); return; }
+      el.replaceChildren(tpls[i].content.cloneNode(true));
+      const n = document.createElement("span");
+      n.className = "pnum";
+      n.textContent = "— " + (i + 1) + " —";
+      el.appendChild(n);
+    }
+
+    function render() {
+      if (single.matches) {
+        fill(L, idx, "single");
+      } else {
+        fill(L, idx, "left");
+        fill(R, idx + 1, "right");
+      }
+      update();
+      // warm the cache for the next spread
+      for (let i = idx + step(); i < idx + step() * 2 && i < N; i++) {
+        const s = firstImg(i);
+        if (s) new Image().src = s;
+      }
+    }
+
+    function update() {
+      const last = Math.min(idx + step(), N);
+      counter.textContent = single.matches ? `p. ${pad(idx + 1)} / ${pad(N)}` : `pp. ${pad(idx + 1)} — ${pad(last)} / ${pad(N)}`;
+      prevBtn.disabled = idx <= 0;
+      nextBtn.disabled = idx + step() >= N;
+      document.querySelectorAll(".sb-mini").forEach(m => {
+        const s = +m.dataset.page;
+        m.classList.toggle("is-current", s === idx || (single.matches && s === idx - 1));
+      });
+    }
+
+    function face(i, side, rear) {
+      const f = document.createElement("div");
+      f.className = "face sb-page is-" + side + (rear ? " rear" : "");
+      if (i >= 0 && i < N) {
+        f.appendChild(tpls[i].content.cloneNode(true));
+        const n = document.createElement("span");
+        n.className = "pnum";
+        n.textContent = "— " + (i + 1) + " —";
+        f.appendChild(n);
+      }
+      const sh = document.createElement("div");
+      sh.className = "shade";
+      f.appendChild(sh);
+      return f;
+    }
+
+    function turn(dir) {
+      if (busy) return;
+      const s = step();
+      const target = idx + dir * s;
+      if (target < 0 || target >= N) return;
+
+      if (reduced) { idx = target; render(); return; }
+      busy = true;
+
+      const leaf = document.createElement("div");
+      let from, to, front, rear;
+
+      if (single.matches) {
+        leaf.className = "sb-leaf single";
+        if (dir > 0) {
+          front = face(idx, "single"); rear = face(-1, "single", true);
+          fill(L, target, "single");
+          from = 0; to = -180;
+        } else {
+          front = face(target, "single"); rear = face(-1, "single", true);
+          from = -180; to = 0;
+        }
+      } else if (dir > 0) {
+        leaf.className = "sb-leaf fwd";
+        front = face(idx + 1, "right");
+        rear = face(target, "left", true);
+        fill(R, target + 1, "right");
+        from = 0; to = -180;
+      } else {
+        leaf.className = "sb-leaf back";
+        front = face(idx, "left");
+        rear = face(target + 1, "right", true);
+        fill(L, target, "left");
+        from = 0; to = 180;
+      }
+
+      leaf.append(front, rear);
+      book.appendChild(leaf);
+
+      const opts = { duration: 950, easing: "cubic-bezier(.45,.05,.2,1)", fill: "forwards" };
+      const anim = leaf.animate(
+        [
+          { transform: `rotateY(${from}deg)` },
+          { transform: `rotateY(${(from + to) / 2}deg) translateZ(2px)`, offset: 0.5 },
+          { transform: `rotateY(${to}deg)` },
+        ],
+        opts
+      );
+      const goingAway = single.matches && dir > 0;
+      front.querySelector(".shade").animate([{ opacity: 0 }, { opacity: 0.7 }], opts);
+      rear.querySelector(".shade").animate([{ opacity: 0.7 }, { opacity: 0 }], opts);
+      if (single.matches) {
+        leaf.animate(goingAway ? [{ opacity: 1 }, { opacity: 1, offset: 0.4 }, { opacity: 0 }] : [{ opacity: 0 }, { opacity: 1, offset: 0.6 }, { opacity: 1 }], opts);
+      }
+
+      anim.onfinish = () => {
+        idx = target;
+        render();
+        leaf.remove();
+        busy = false;
+      };
+    }
+
+    function goTo(page) {
+      const target = single.matches ? page : page - (page % 2);
+      if (target === idx) return;
+      if (Math.abs(target - idx) === step()) { turn(target > idx ? 1 : -1); return; }
+      idx = target;
+      book.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: reduced ? 0 : 500 });
+      render();
+    }
+
+    // ---- input ----
+    prevBtn.addEventListener("click", () => turn(-1));
+    nextBtn.addEventListener("click", () => turn(1));
+
+    document.addEventListener("keydown", e => {
+      if (e.target.closest("input, textarea")) return;
+      if (e.key === "ArrowRight") turn(1);
+      if (e.key === "ArrowLeft") turn(-1);
+    });
+
+    let downX = null, swiped = false;
+    book.addEventListener("pointerdown", e => { downX = e.clientX; swiped = false; });
+    book.addEventListener("pointerup", e => {
+      if (downX === null) return;
+      const dx = e.clientX - downX;
+      downX = null;
+      if (Math.abs(dx) > 40) { swiped = true; turn(dx < 0 ? 1 : -1); }
+    });
+    book.addEventListener("click", e => {
+      if (swiped || e.target.closest("a")) return;
+      const r = book.getBoundingClientRect();
+      turn(e.clientX - r.left > r.width / 2 ? 1 : -1);
+    });
+
+    single.addEventListener("change", () => {
+      if (!single.matches) idx -= idx % 2;
+      render();
+    });
+
+    // ---- film strip ----
+    const reel = document.getElementById("reel");
+    const frames = [];
+    tpls.forEach((t, i) => {
+      t.content.querySelectorAll("img").forEach(img => frames.push({ src: img.getAttribute("src"), alt: img.alt, page: i }));
+    });
+    const makeFrame = (f, k, hidden) => {
+      const a = document.createElement("a");
+      a.className = "sb-frame";
+      a.href = "#book";
+      if (hidden) { a.tabIndex = -1; a.setAttribute("aria-hidden", "true"); }
+      a.innerHTML = `<img alt="" loading="lazy"><span>▸ ${k + 1}${k % 3 === 1 ? "A" : ""}</span>`;
+      a.querySelector("img").src = thumb(f.src);
+      a.querySelector("img").alt = hidden ? "" : f.alt;
+      a.addEventListener("click", ev => { ev.preventDefault(); goTo(f.page); book.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); });
+      return a;
+    };
+    [false, true].forEach(h => frames.forEach((f, k) => reel.appendChild(makeFrame(f, k, h))));
+
+    // ---- contact sheet: one miniature spread per opening ----
+    const minis = document.getElementById("minis");
+    for (let i = 0; i < N; i += 2) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sb-mini";
+      btn.dataset.page = i;
+      const fig = document.createElement("figure");
+      const spread = document.createElement("div");
+      spread.className = "spread";
+      [i, i + 1].forEach(p => {
+        const half = document.createElement("div");
+        half.className = "half";
+        const s = p < N ? firstImg(p) : null;
+        if (s) {
+          const im = document.createElement("img");
+          im.src = thumb(s);
+          im.alt = "";
+          im.loading = "lazy";
+          half.appendChild(im);
+        } else {
+          half.innerHTML = '<div class="lines"></div>';
+        }
+        spread.appendChild(half);
+      });
+      const cap = document.createElement("figcaption");
+      cap.innerHTML = `<span></span><span>pp. ${pad(i + 1)}–${pad(Math.min(i + 2, N))}</span>`;
+      cap.firstChild.textContent = tpls[i].dataset.label;
+      fig.append(spread, cap);
+      btn.appendChild(fig);
+      btn.setAttribute("aria-label", `Open to ${tpls[i].dataset.label}, pages ${i + 1} to ${Math.min(i + 2, N)}`);
+      btn.addEventListener("click", () => {
+        goTo(i);
+        book.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
+      });
+      minis.appendChild(btn);
+    }
+    document.getElementById("sheet-count").textContent = `${pad(Math.ceil(N / 2))} openings · ${pad(frames.length)} frames`;
+
+    render();
+  })();
+  </script>
 </body>
 </html>
