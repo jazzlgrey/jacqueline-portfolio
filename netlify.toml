@@ -1,0 +1,7 @@
+# Netlify builds the site on every push. See site/scripts/netlify-build.sh.
+[build]
+  command = "bash site/scripts/netlify-build.sh"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -25,6 +25,18 @@
         "--strictPort"
       ],
       "port": 5199
+    },
+    {
+      "name": "netlify-output",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8790",
+        "--directory",
+        "_site"
+      ],
+      "port": 8790
     }
   ]
 }
