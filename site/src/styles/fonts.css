@@ -1,0 +1,39 @@
+/* Exactly the faces used in the Figma file (weights match each font's
+   usWeightClass, which is what Figma reports). */
+@font-face {
+  font-family: 'Season Mix';
+  src: url('../assets/fonts/SeasonMix-TRIAL-Regular.woff2') format('woff2');
+  font-weight: 420;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Season Mix';
+  src: url('../assets/fonts/SeasonMix-TRIAL-SemiBold.woff2') format('woff2');
+  font-weight: 670;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Season Serif';
+  src: url('../assets/fonts/SeasonSerif-TRIAL-Regular.woff2') format('woff2');
+  font-weight: 470;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Season Sans';
+  src: url('../assets/fonts/SeasonSans-TRIAL-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Season Sans';
+  src: url('../assets/fonts/SeasonSans-TRIAL-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Haffer Mono';
+  src: url('../assets/fonts/HafferMono-TRIAL-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}

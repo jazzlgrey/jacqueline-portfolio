@@ -1,0 +1,22 @@
+/* Figma: 1px solid black stroke on the painting. */
+.hero__painting {
+  border: 1px solid #000;
+}
+
+/* The jellyfish nav is a semantic wrapper only; its children are placed on
+   the hero canvas. */
+.hero__jellyfish-nav {
+  display: contents;
+}
+
+.hero__jellyfish-nav a {
+  cursor: pointer;
+}
+
+/* The Figma fill on this painting carries an image adjustment that darkens
+   it (measured: x0.85 on every channel). We ship the full-resolution
+   original and reproduce the adjustment here instead of shipping Figma's
+   678px-wide export, which would look soft at 865px. */
+.hero__painting img {
+  filter: brightness(0.85);
+}

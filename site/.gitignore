@@ -1,0 +1,6 @@
+node_modules
+dist
+# Original Figma exports (~25 MB, incl. a 14 MB PNG). Re-download from
+# Figma if needed; the optimized copies in src/assets are what ship.
+assets-src/
+*.tsbuildinfo

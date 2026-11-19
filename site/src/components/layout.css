@@ -1,0 +1,209 @@
+/* ---------------------------------------------------------------------------
+   Canvas: one Figma frame, scaled to the page width.
+   --u is the size of one design pixel.
+   ------------------------------------------------------------------------- */
+.canvas {
+  --cw: var(--dcw);
+  --ch: var(--dch);
+  --pw: var(--cw);
+  --u: calc(100cqw / var(--cw));
+  position: relative;
+  height: calc(var(--ch) * var(--u));
+  overflow: hidden;
+  background: var(--color-midnight);
+}
+
+/* ---------------------------------------------------------------------------
+   Layer: an element placed in design px. Mobile values fall back to desktop.
+   ------------------------------------------------------------------------- */
+.layer {
+  --x: var(--dx);
+  --y: var(--dy);
+  --w: var(--dw);
+  --h: var(--dh);
+  position: absolute;
+  margin: 0;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+}
+
+.layer--auto-h {
+  height: auto;
+}
+
+/* Single-line text anchored right or centre sizes to its content, so text
+   that renders larger than designed (minimum sizes) grows the right way. */
+.layer--right.type--nowrap,
+.layer--center.type--nowrap,
+.layer--right.layer--fit,
+.layer--center.layer--fit {
+  width: max-content;
+}
+
+.layer--clip {
+  overflow: hidden;
+}
+
+/* Right-anchored: grows leftwards from the designed right edge. */
+.layer--right {
+  left: auto;
+  right: calc((var(--pw) - var(--x) - var(--w)) * var(--u));
+  text-align: right;
+}
+
+/* Centre-anchored: stays centred on the designed centre line. */
+.layer--center {
+  left: calc((var(--x) + var(--w) / 2) * var(--u));
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Art: image layers.
+   ------------------------------------------------------------------------- */
+.art {
+  pointer-events: none;
+  border-radius: calc(var(--radius, 0) * var(--u));
+}
+
+.art__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border-radius: inherit;
+}
+
+.art__img--cover {
+  object-fit: cover;
+}
+
+.art__img--fill {
+  object-fit: fill;
+}
+
+.art__img--crop {
+  inset: auto;
+}
+
+.art__img--rotated {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--iw) * var(--u));
+  height: calc(var(--ih) * var(--u));
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------------
+   Type: the Figma text styles. Sizes scale with the canvas but never drop
+   below a readable minimum on small screens.
+   ------------------------------------------------------------------------- */
+.type {
+  font-size: max(calc(var(--fs) * var(--u)), var(--fs-min));
+  line-height: normal;
+  font-style: normal;
+  overflow-wrap: break-word;
+}
+
+.type--nowrap {
+  white-space: nowrap;
+}
+
+/* Logo — Season Mix SemiBold 96 / -10% */
+.type--logo {
+  --fs: 96;
+  --fs-min: 34px;
+  font-family: var(--font-mix);
+  font-weight: 670;
+  letter-spacing: -0.1em;
+}
+
+/* Title — Season Mix Regular 96 */
+.type--title {
+  --fs: 96;
+  --fs-min: 30px;
+  font-family: var(--font-mix);
+  font-weight: 420;
+}
+
+/* Heading 1 — Season Serif Regular 64 */
+.type--heading {
+  --fs: 64;
+  --fs-min: 20px;
+  font-family: var(--font-serif);
+  font-weight: 470;
+  /* Browsers place Season Serif's glyphs 1px higher than Figma does within
+     a "normal" line box; this restores the designed baseline. */
+  padding-top: calc(1 * var(--u));
+}
+
+/* Body text — Season Sans Regular 32 */
+.type--body {
+  --fs: 32;
+  --fs-min: 12px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  white-space: pre-wrap;
+}
+
+/* Note — Haffer Mono Regular 20 */
+.type--note {
+  --fs: 20;
+  --fs-min: 10px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+
+/* Jellyfish labels — Season Mix Regular 28 */
+.type--label {
+  --fs: 28;
+  --fs-min: 11px;
+  font-family: var(--font-mix);
+  font-weight: 420;
+}
+
+.color--ice { color: var(--color-ice); }
+.color--moonshine { color: var(--color-moonshine); }
+.color--lotus { color: var(--color-lotus); }
+.color--frost { color: var(--color-frost); }
+.color--white { color: var(--color-white); }
+
+/* ---------------------------------------------------------------------------
+   Mobile: canvases may switch to their alternative frame and layers to
+   their alternative boxes.
+   ------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .canvas {
+    --cw: var(--mcw, var(--dcw));
+    --ch: var(--mch, var(--dch));
+  }
+
+  .layer {
+    --x: var(--mx, var(--dx));
+    --y: var(--my, var(--dy));
+    --w: var(--mw, var(--dw));
+    --h: var(--mh, var(--dh));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Site navigation. In Figma the items start 118 design px apart; with
+   Haffer Mono at 20px that is a 22px gap between words.
+   ------------------------------------------------------------------------- */
+.site-nav__list {
+  display: flex;
+  justify-content: flex-end;
+  gap: max(calc(22 * var(--u)), 0.9em);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .site-nav__list {
+    font-size: 12px;
+    gap: 1.4em;
+  }
+}

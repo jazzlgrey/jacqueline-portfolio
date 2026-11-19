@@ -1,0 +1,17 @@
+/* Design tokens from the Figma file's variables. */
+:root {
+  --color-midnight: #030b1c;
+  --color-ice: #aedbff;
+  --color-moonshine: #fff8bd;
+  --color-lotus: #dcc6d2;
+  --color-frost: #e8ecf5;
+  --color-white: #ffffff;
+
+  --font-mix: 'Season Mix', 'Iowan Old Style', Georgia, serif;
+  --font-serif: 'Season Serif', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Season Sans', system-ui, sans-serif;
+  --font-mono: 'Haffer Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Width of the Figma frame. The page never grows past it. */
+  --design-width: 2005px;
+}

@@ -1,0 +1,17 @@
+.projects__frame {
+  /* Anchors inside the frame measure from its own right edge. */
+  --pw: 1996;
+}
+
+/* The Matin & Vesper title is one heading whose three words are placed
+   individually; the wrapper itself is positioned at the frame origin. */
+.projects__matin-vesper {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.projects a {
+  pointer-events: auto;
+}
