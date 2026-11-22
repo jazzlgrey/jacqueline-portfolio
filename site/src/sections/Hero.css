@@ -20,3 +20,80 @@
 .hero__painting img {
   filter: brightness(0.85);
 }
+
+/* ---------------------------------------------------------------------------
+   Jellyfish drift: each jellyfish wanders slowly along its own loop and sways
+   a little, like something carried by a current. Distances are design px, so
+   the motion scales with the composition. Every loop starts and ends at the
+   Figma position.
+   ------------------------------------------------------------------------- */
+.drift {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-origin: calc(var(--cx) * var(--u)) calc(var(--cy) * var(--u));
+  animation:
+    var(--drift-path) var(--drift-time) ease-in-out infinite,
+    jelly-sway var(--sway-time) ease-in-out infinite;
+  will-change: translate, rotate;
+}
+
+.drift a {
+  pointer-events: auto;
+}
+
+/* Let people catch a jellyfish to click it. */
+.drift:hover,
+.drift:focus-within {
+  animation-play-state: paused;
+}
+
+.drift--about    { --drift-path: drift-about;    --drift-time: 38s; --sway-time: 9s; }
+.drift--creating { --drift-path: drift-creating; --drift-time: 32s; --sway-time: 11s; }
+.drift--writings { --drift-path: drift-writings; --drift-time: 44s; --sway-time: 10s; }
+.drift--library  { --drift-path: drift-library;  --drift-time: 36s; --sway-time: 12s; }
+
+@keyframes drift-about {
+  0%, 100% { translate: 0 0; }
+  22% { translate: calc(40 * var(--u)) calc(-30 * var(--u)); }
+  45% { translate: calc(70 * var(--u)) calc(10 * var(--u)); }
+  68% { translate: calc(30 * var(--u)) calc(45 * var(--u)); }
+  85% { translate: calc(-20 * var(--u)) calc(20 * var(--u)); }
+}
+
+@keyframes drift-creating {
+  0%, 100% { translate: 0 0; }
+  25% { translate: calc(-35 * var(--u)) calc(-40 * var(--u)); }
+  50% { translate: calc(-60 * var(--u)) calc(5 * var(--u)); }
+  72% { translate: calc(-25 * var(--u)) calc(35 * var(--u)); }
+  88% { translate: calc(20 * var(--u)) calc(10 * var(--u)); }
+}
+
+@keyframes drift-writings {
+  0%, 100% { translate: 0 0; }
+  20% { translate: calc(50 * var(--u)) calc(25 * var(--u)); }
+  45% { translate: calc(20 * var(--u)) calc(70 * var(--u)); }
+  70% { translate: calc(-40 * var(--u)) calc(40 * var(--u)); }
+  86% { translate: calc(-30 * var(--u)) calc(-15 * var(--u)); }
+}
+
+@keyframes drift-library {
+  0%, 100% { translate: 0 0; }
+  24% { translate: calc(-45 * var(--u)) calc(-20 * var(--u)); }
+  48% { translate: calc(-15 * var(--u)) calc(-55 * var(--u)); }
+  70% { translate: calc(40 * var(--u)) calc(-35 * var(--u)); }
+  87% { translate: calc(35 * var(--u)) calc(15 * var(--u)); }
+}
+
+@keyframes jelly-sway {
+  0%, 100% { rotate: 0deg; }
+  30% { rotate: 2.5deg; }
+  70% { rotate: -2.5deg; }
+}
+
+/* People who ask their system for less motion get the still composition. */
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}

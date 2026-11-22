@@ -3,6 +3,8 @@ import { Art } from '../components/Art';
 import { Text } from '../components/Text';
 import { img } from '../assets';
 import { links } from '../links';
+import type { ReactNode } from 'react';
+import type { VarStyle } from '../components/layout';
 import './Hero.css';
 
 /** Figma frame "Hero" (1:52), 2005 × 1306. */
@@ -22,24 +24,33 @@ export default function Hero() {
       />
 
       <nav aria-label="Explore" className="hero__jellyfish-nav">
-        <Art {...img.blueJellyfish} alt="" box={[386, 683, 273, 265]} priority />
-        <Text as="a" href="#about" box={[447, 798, 151, 67]} variant="label" color="ice" nowrap>
-          about me
-        </Text>
-        <Art {...img.blueJellyfish2} alt="" box={[469, 599, 313, 208]} fit="fill" priority />
-        <Text as="a" href="#projects" box={[582, 642, 146, 66]} variant="label" color="ice">
-          what i’ve been creating
-        </Text>
+        {/* Each jellyfish drifts together with its label (see Hero.css). */}
+        <Drift name="about" center={[522, 815]}>
+          <Art {...img.blueJellyfish} alt="" box={[386, 683, 273, 265]} priority />
+          <Text as="a" href="#about" box={[447, 798, 151, 67]} variant="label" color="ice" nowrap>
+            about me
+          </Text>
+        </Drift>
+        <Drift name="creating" center={[625, 703]}>
+          <Art {...img.blueJellyfish2} alt="" box={[469, 599, 313, 208]} fit="fill" priority />
+          <Text as="a" href="#projects" box={[582, 642, 146, 66]} variant="label" color="ice">
+            what i’ve been creating
+          </Text>
+        </Drift>
         <Art {...img.pinkLotus} alt="" box={[0, -12, 314, 912]} priority />
         <Art {...img.lotusLeaf} alt="" box={[854, 1097, 343, 209]} rotate={{ deg: -90, inner: [209, 343] }} />
-        <Art {...img.fiveJellyfish1} alt="" box={[728, 362, 275, 291]} fit="fill" priority />
-        <Text as="a" href={links.writings} box={[782, 434, 144, 58]} variant="label" color="ice" nowrap>
-          my writings
-        </Text>
-        <Art {...img.fiveJellyfish2} alt="" box={[659, 865, 222, 178]} fit="fill" priority />
-        <Text as="a" href={links.library} box={[709, 964, 157, 57]} variant="label" color="ice" nowrap>
-          my library
-        </Text>
+        <Drift name="writings" center={[865, 507]}>
+          <Art {...img.fiveJellyfish1} alt="" box={[728, 362, 275, 291]} fit="fill" priority />
+          <Text as="a" href={links.writings} box={[782, 434, 144, 58]} variant="label" color="ice" nowrap>
+            my writings
+          </Text>
+        </Drift>
+        <Drift name="library" center={[770, 954]}>
+          <Art {...img.fiveJellyfish2} alt="" box={[659, 865, 222, 178]} fit="fill" priority />
+          <Text as="a" href={links.library} box={[709, 964, 157, 57]} variant="label" color="ice" nowrap>
+            my library
+          </Text>
+        </Drift>
       </nav>
 
       <Art {...img.blackLotus} alt="" box={[875, 938, 301.505, 412.521]} rotate={{ deg: -15, inner: [213, 370] }} />
@@ -47,5 +58,19 @@ export default function Hero() {
         perlgray
       </Text>
     </Canvas>
+  );
+}
+
+/**
+ * Moves a jellyfish and its label together. The wrapper covers the whole
+ * canvas, so its children keep their Figma coordinates; only the wrapper is
+ * animated. `center` (design px) is the pivot for the gentle sway.
+ */
+function Drift({ name, center, children }: { name: string; center: [number, number]; children: ReactNode }) {
+  const style: VarStyle = { '--cx': center[0], '--cy': center[1] };
+  return (
+    <div className={`drift drift--${name}`} style={style}>
+      {children}
+    </div>
   );
 }

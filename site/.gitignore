@@ -4,3 +4,4 @@ dist
 # Figma if needed; the optimized copies in src/assets are what ship.
 assets-src/
 *.tsbuildinfo
+.vite
