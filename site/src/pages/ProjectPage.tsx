@@ -4,13 +4,13 @@ import { Text } from '../components/Text';
 import { Logo } from '../components/Logo';
 import { ContactLines } from '../sections/Footer';
 import { useReveal } from '../components/Reveal';
+import { HomeMark, RoughFilter } from '../components/HomeMark';
 import { cx, type Box, type VarStyle } from '../components/layout';
 import { img } from '../assets';
 import { links } from '../links';
 import line1 from '../assets/svg/line-1.svg';
 import line2 from '../assets/svg/line-2.svg';
 import line3 from '../assets/svg/line-3.svg';
-import homeLabel from '../assets/svg/home-label.svg';
 import './ProjectPage.css';
 
 type Asset = { src: string; intrinsic: readonly [number, number]; srcSet?: string };
@@ -106,11 +106,7 @@ export default function ProjectPage() {
   useReveal();
   return (
     <div className="page page--project">
-      {/* Fixed sun-moon: hover shows the curved "home" label (prototype). */}
-      <a href="./" className="pp-home" aria-label="home">
-        <img className="pp-home__label" src={homeLabel} alt="" />
-        <img className="pp-home__mark" src={img.sunMoon.src} alt="" width={img.sunMoon.intrinsic[0]} height={img.sunMoon.intrinsic[1]} />
-      </a>
+      <HomeMark />
 
       <Canvas as="section" size={[1971, 8200]} mobileSize={[900, 7660]} className="pp" aria-label="what i’ve been creating">
         <nav aria-label="Primary" className="pp-nav">
@@ -122,20 +118,13 @@ export default function ProjectPage() {
           </Text>
         </nav>
 
-        {/* Figma roughens the "creating..." outline (noise effect). */}
-        <svg className="pp-defs" aria-hidden="true" focusable="false">
-          {/* Generous region: the script glyphs overhang their text box. */}
-          <filter id="pp-rough" x="-15%" y="-30%" width="130%" height="160%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="3" />
-            <feDisplacementMap in="SourceGraphic" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </svg>
+        <RoughFilter />
 
         <h1 className="pp-heading">
           <Text as="span" box={[77, 225, 909]} mobile={[48, 250, 800]} variant="title" color="moonshine" nowrap>
             what i’ve been
           </Text>
-          <Text as="span" box={[413, 234, 1227, 346]} mobile={[100, 330, 760, 216]} variant="script" color="ice" nowrap className="pp-creating">
+          <Text as="span" box={[413, 234, 1227, 346]} mobile={[100, 330, 760, 216]} variant="display" color="ice" nowrap>
             creating...
           </Text>
         </h1>

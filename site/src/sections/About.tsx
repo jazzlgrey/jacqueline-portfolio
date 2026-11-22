@@ -5,6 +5,7 @@ import { Text } from '../components/Text';
 import { SiteNav } from '../components/SiteNav';
 import { ParticleCarousel, type Slide } from '../components/ParticleCarousel';
 import { img } from '../assets';
+import type { VarStyle } from '../components/layout';
 
 const slides: Slide[] = [
   {
@@ -33,8 +34,14 @@ export default function About() {
     <Canvas size={[2005, 1421]} mobileSize={[881, 2600]} id="about" aria-labelledby="about-title" className="about">
       <Art {...img.aboutStainedGlass} alt="" box={[0, 25, 881, 1396]} mobile={[0, 105, 881, 1396]} />
 
-      <Text as="h2" id="about-title" box={[976, 300, 398]} mobile={[48, 1550, 600]} variant="title" color="lotus" nowrap>
-        about me
+      {/* "about" in Kapakana, "me" in Season Mix tucked under its "t". */}
+      <Text as="h2" id="about-title" box={[944, 267, 560]} mobile={[60, 1517, 600]} variant="title" color="lotus" nowrap className="mixed-title">
+        <span className="mixed-title__script" style={{ '--ks': 200 } as VarStyle}>
+          about
+        </span>{' '}
+        <span className="mixed-title__drop" style={{ '--sx': -12, '--sy': 33 } as VarStyle}>
+          me
+        </span>
       </Text>
       {/* Longer text than the Figma copy, so the block starts higher to clear the lotus. */}
       <Layer box={[976, 449, 933]} mobile={[48, 1700, 800]} className="type type--body color--frost">

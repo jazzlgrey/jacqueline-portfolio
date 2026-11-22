@@ -200,6 +200,56 @@
   font-weight: 400;
 }
 
+/* Display script — Kapakana 400 ("creating...", "reading..."); Figma's
+   text box is 346 tall. Needs <RoughFilter /> on the page. */
+.type.type--display {
+  --fs: 400;
+  --fs-min: 90px;
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1;
+  filter: url(#rough);
+}
+
+@media (max-width: 767px) {
+  .type.type--display {
+    --fs: 240;
+    --fs-min: 60px;
+  }
+}
+
+.rough-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Two-font headings ("about me", "selected projects"): one word in the
+   Kapakana script, the other in Season Mix. Sizes and offsets are design px
+   at the 96px title size, expressed in em so they scale with the title
+   (including its mobile minimum). --sx is measured from where the word
+   would normally start after the space. */
+.mixed-title__script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: calc(var(--ks) / 96 * 1em);
+  letter-spacing: 0;
+  /* Don't let the larger script grow the line box. */
+  line-height: 0;
+}
+
+.mixed-title__drop {
+  position: relative;
+  top: calc(var(--sy, 0) / 96 * 1em);
+  /* The script word's own font size would scale these; use the title's. */
+  margin-left: calc((var(--sx, 0) - 24) / 96 * 1em);
+}
+
+.mixed-title__script.mixed-title__drop {
+  top: calc(var(--sy, 0) / var(--ks) * 1em);
+  margin-left: calc((var(--sx, 0) - 24) / var(--ks) * 1em);
+}
+
 /* Sun-moon logo: a link back to the home hero. */
 .logo-mark {
   display: block;

@@ -4,6 +4,7 @@ import { Layer } from '../components/Layer';
 import { Text } from '../components/Text';
 import { img } from '../assets';
 import { links } from '../links';
+import type { VarStyle } from '../components/layout';
 import './Projects.css';
 
 /**
@@ -67,8 +68,12 @@ export default function Projects() {
         <Art {...img.arcades} alt="" box={[2, 1631, 2001, 1503]} crop={[0.02, 1.75, 100, 100.01]} />
         <Art {...img.whiteLotus} alt="" box={[1706, 0, 227, 214]} />
 
-        <Text as="h2" id="projects-title" box={[64, 76, 704]} variant="title" color="lotus" nowrap>
-          selected projects
+        {/* "selected" in Season Mix, "projects" in Kapakana dropped below. */}
+        <Text as="h2" id="projects-title" box={[64, 10, 704]} variant="title" color="lotus" nowrap className="mixed-title">
+          selected{' '}
+          <span className="mixed-title__script mixed-title__drop" style={{ '--ks': 168, '--sx': -19, '--sy': 46 } as VarStyle}>
+            projects
+          </span>
         </Text>
 
         {/* 01 — The Stranger */}

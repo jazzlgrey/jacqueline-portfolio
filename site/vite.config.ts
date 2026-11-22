@@ -8,11 +8,13 @@ export default defineConfig({
   base: './',
   build: {
     assetsInlineLimit: 0,
-    // Two pages: the homepage and the Project Page (replaces projects.html).
+    // Pages: the homepage, the Project Page and the booklog (each replaces
+    // the legacy page of the same name in the deployed site).
     rollupOptions: {
       input: {
         main: 'index.html',
         projects: 'projects.html',
+        booklog: 'booklog.html',
       },
     },
   },

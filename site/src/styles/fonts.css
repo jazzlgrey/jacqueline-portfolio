@@ -19,6 +19,13 @@
   font-display: swap;
 }
 @font-face {
+  font-family: 'Season Serif';
+  src: url('../assets/fonts/SeasonSerif-TRIAL-RegularItalic.woff2') format('woff2');
+  font-weight: 470;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Season Sans';
   src: url('../assets/fonts/SeasonSans-TRIAL-Regular.woff2') format('woff2');
   font-weight: 400;
