@@ -2,7 +2,7 @@ import type { ElementType, ReactNode } from 'react';
 import { Layer } from './Layer';
 import { cx, type Box } from './layout';
 
-export type TextStyle = 'logo' | 'title' | 'heading' | 'body' | 'note' | 'label';
+export type TextStyle = 'logo' | 'title' | 'heading' | 'body' | 'note' | 'label' | 'script' | 'section' | 'caption' | 'mono';
 export type TextColor = 'ice' | 'moonshine' | 'lotus' | 'frost' | 'white';
 
 type TextProps = {

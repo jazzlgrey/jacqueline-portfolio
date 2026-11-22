@@ -3,6 +3,7 @@ import { Art } from '../components/Art';
 import { Text } from '../components/Text';
 import { img } from '../assets';
 import { links } from '../links';
+import { Logo } from '../components/Logo';
 import type { ReactNode } from 'react';
 import type { VarStyle } from '../components/layout';
 import './Hero.css';
@@ -12,7 +13,7 @@ export default function Hero() {
   return (
     // Mobile: the left collage keeps its composition (1140 wide) and the
     // painting moves underneath it at full width.
-    <Canvas size={[2005, 1306]} mobileSize={[1140, 3027]} className="hero" aria-label="perlgray">
+    <Canvas size={[2005, 1306]} mobileSize={[1140, 3027]} className="hero" id="top" aria-label="perlgray">
       <Art {...img.heroTexture} alt="" box={[-23, -569, 1145, 2036]} />
       <Art
         {...img.ua862}
@@ -33,7 +34,7 @@ export default function Hero() {
         </Drift>
         <Drift name="creating" center={[625, 703]}>
           <Art {...img.blueJellyfish2} alt="" box={[469, 599, 313, 208]} fit="fill" priority />
-          <Text as="a" href="#projects" box={[582, 642, 146, 66]} variant="label" color="ice">
+          <Text as="a" href={links.projects} box={[582, 642, 146, 66]} variant="label" color="ice">
             what i’ve been creating
           </Text>
         </Drift>
@@ -54,9 +55,7 @@ export default function Hero() {
       </nav>
 
       <Art {...img.blackLotus} alt="" box={[875, 938, 301.505, 412.521]} rotate={{ deg: -15, inner: [213, 370] }} />
-      <Text as="h1" box={[55, 1154, 289]} variant="logo" color="moonshine" nowrap>
-        perlgray
-      </Text>
+      <Logo as="h1" href="#top" mark={[21, 1145, 159, 161]} word={[168, 1144]} />
     </Canvas>
   );
 }

@@ -6,10 +6,14 @@
   --color-lotus: #dcc6d2;
   --color-frost: #e8ecf5;
   --color-white: #ffffff;
+  --color-winter-rose: #8f1a37;
+  /* Hover accent from the prototype notes. */
+  --color-lime: #b3ff1a;
 
   --font-mix: 'Season Mix', 'Iowan Old Style', Georgia, serif;
   --font-serif: 'Season Serif', 'Iowan Old Style', Georgia, serif;
   --font-sans: 'Season Sans', system-ui, sans-serif;
+  --font-script: 'Kapakana', 'Snell Roundhand', cursive;
   --font-mono: 'Haffer Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Width of the Figma frame. The page never grows past it. */

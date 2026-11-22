@@ -27,6 +27,20 @@ import ua862Sm from './assets/figma/ua862-sm.webp';
 import vespers from './assets/figma/vespers.webp';
 import vespersSm from './assets/figma/vespers-sm.webp';
 import whiteLotus from './assets/figma/white-lotus.webp';
+import atcbLogoOld from './assets/figma/atcb-logo-old.webp';
+import atlasBackground from './assets/figma/atlas-background.webp';
+import exhibition1 from './assets/figma/exhibition-1.webp';
+import exhibition2 from './assets/figma/exhibition-2.webp';
+import exhibition3 from './assets/figma/exhibition-3.webp';
+import gymnopedie from './assets/figma/gymnopedie.webp';
+import matinsAltar from './assets/figma/matins-altar.webp';
+import matinsDetail from './assets/figma/matins-detail.webp';
+import monster from './assets/figma/monster.webp';
+import strangerDetails from './assets/figma/stranger-details.webp';
+import strangerPart2 from './assets/figma/stranger-part-2.webp';
+import ua862Process1 from './assets/figma/ua862-process-1.webp';
+import vesperSh from './assets/figma/vesper-sh.webp';
+import vespersPortrait from './assets/figma/vespers-portrait.webp';
 
 type Asset = { src: string; intrinsic: readonly [number, number]; srcSet?: string };
 const a = (src: string, w: number, h: number, small?: [string, number]): Asset => ({
@@ -60,4 +74,18 @@ export const img = {
   ua862: a(ua862, 2000, 3022, [ua862Sm, 900]),
   vespers: a(vespers, 2260, 3013, [vespersSm, 1000]),
   whiteLotus: a(whiteLotus, 607, 571),
+  atcbLogoOld: a(atcbLogoOld, 1100, 1100),
+  atlasBackground: a(atlasBackground, 1970, 2977),
+  exhibition1: a(exhibition1, 1400, 1050),
+  exhibition2: a(exhibition2, 1400, 1050),
+  exhibition3: a(exhibition3, 1600, 1200),
+  gymnopedie: a(gymnopedie, 1100, 822),
+  matinsAltar: a(matinsAltar, 1700, 2267),
+  matinsDetail: a(matinsDetail, 600, 800),
+  monster: a(monster, 2200, 1775),
+  strangerDetails: a(strangerDetails, 560, 996),
+  strangerPart2: a(strangerPart2, 1700, 1275),
+  ua862Process1: a(ua862Process1, 765, 1024),
+  vesperSh: a(vesperSh, 768, 1024),
+  vespersPortrait: a(vespersPortrait, 1100, 1467),
 } as const;

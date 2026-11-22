@@ -1,0 +1,9 @@
+.fall-figure {
+  position: fixed;
+  z-index: 5;
+  visibility: hidden;
+  pointer-events: none;
+  object-fit: contain;
+  transform-origin: 50% 30%;
+  will-change: transform;
+}

@@ -1,0 +1,20 @@
+.canvas.footer {
+  background: var(--color-winter-rose);
+}
+
+.footer__contact {
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.footer__contact.footer__contact--left {
+  text-align: left;
+}
+
+@media (max-width: 767px) {
+  .footer__contact.layer--right {
+    left: calc(var(--x) * var(--u));
+    right: auto;
+    text-align: left;
+  }
+}

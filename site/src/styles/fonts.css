@@ -37,3 +37,11 @@
   font-weight: 400;
   font-display: swap;
 }
+/* Kapakana (Google Fonts, SIL OFL) — the script "perlgray" wordmark and
+   "creating…". Latin subset only. */
+@font-face {
+  font-family: 'Kapakana';
+  src: url('../assets/fonts/Kapakana-Regular-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}

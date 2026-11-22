@@ -2,6 +2,7 @@ import Hero from './sections/Hero';
 import About from './sections/About';
 import Projects from './sections/Projects';
 import Footer from './sections/Footer';
+import { HeroAboutTransition } from './motion/HeroAboutTransition';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Projects />
       </main>
       <Footer />
+      <HeroAboutTransition />
     </div>
   );
 }

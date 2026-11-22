@@ -166,6 +166,57 @@
   font-weight: 420;
 }
 
+/* Script wordmark — Kapakana 140 / -7px tracking, 100% line height */
+.type--script {
+  --fs: 140;
+  --fs-min: 46px;
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+/* Section title — Season Serif Regular 50 (Project Page) */
+.type--section {
+  --fs: 50;
+  --fs-min: 18px;
+  font-family: var(--font-serif);
+  font-weight: 470;
+}
+
+/* Caption — Season Sans Regular 32, single line */
+.type--caption {
+  --fs: 32;
+  --fs-min: 12px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+/* Large note — Haffer Mono Regular 32 */
+.type--mono {
+  --fs: 32;
+  --fs-min: 13px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+
+/* Sun-moon logo: a link back to the home hero. */
+.logo-mark {
+  display: block;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+
+/* The script wordmark always overlaps the sun-moon, never the reverse. */
+.logo-word {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-mark:hover {
+  transform: rotate(-8deg);
+}
+
 .color--ice { color: var(--color-ice); }
 .color--moonshine { color: var(--color-moonshine); }
 .color--lotus { color: var(--color-lotus); }

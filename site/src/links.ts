@@ -7,4 +7,5 @@ export const links = {
   atlas: '/projects/atlas.html',
   email: 'mailto:itsjacquelinehere@gmail.com',
   phone: 'tel:+15106102682',
+  instagram: 'https://www.instagram.com/perlgray/',
 } as const;
